@@ -279,12 +279,11 @@ const VideoCall: React.FC = () => {
                       )}
                       {transcriptDisplayed ? (
                             $config.chat ? (
-                                <SymblTranscript setTranscriptDisplayed={setTranscriptDisplayed} username={username} />
-                            ) : (
+                          <SymblTranscript show={true} setTranscriptDisplayed={setTranscriptDisplayed} username={username} />) : (
                                 {}
                             )
                         ) : (
-                            <></>
+                          <SymblTranscript show={false} setTranscriptDisplayed={setTranscriptDisplayed} username={username} />
                         )
                       }
                       <Transcript></Transcript>

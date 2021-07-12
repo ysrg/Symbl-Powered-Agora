@@ -30,7 +30,7 @@ const getContent = (data) => {
  export const  SymblContext=React.createContext(null);
 export const StorageConsumer = SymblContext.Consumer;
 let m = new Map;
-let symbl=null;
+let symbl = null, sS = null;
 let interTranscript=``;
 let interInsight=``;
 let interTopic=``;
@@ -48,7 +48,9 @@ export function getInterInsight(){
 
 }
 export async function SendStream(channelName,optionalUid,optionalInfo) {
-
+    if (symbl || sS ) {
+        return { sS, symbl };
+    }
 
     /////
 
@@ -116,130 +118,6 @@ export async function SendStream(channelName,optionalUid,optionalInfo) {
         //window.localStorage.setItem("symbltoken",Symbl.ACCESS_TOKEN);
 
     symbl = new Symbl(config);
-        const insightHandler = {
-            onInsightCreated: (insight) => {
-                console.log('Insight created', insight, insight.type);
-                // insight.createElement();
-                const div = document.createElement("div");
-                div.innerHTML = `
-                    <div style="background-color: rgba(30, 164, 253, 0.1); margin: 15px; padding: 8px; color: rgba(0, 0, 0, 1);">
-    <div style="font-weight: bold;font-family: Roboto;font-style: normal; font-size: 12px;line-height: 14px;letter-spacing: 0.04em;text-align: left; margin-bottom: 5px;"> ${insight.type} </div>
-    <div style="padding: 2px; font-size:13px "> ${insight.text} </div>
-    <div style="text-align: right; font-weight: 200; font-size: 10px; margin-left: 15px;"> ${new Date().toLocaleString()} </span>
-</div>
-                        `;
-                insight.element = div;
-                const container = document.getElementById("transcriptContainer");
-                insight.add(container);
-                console.log("neeraj"+JSON.stringify(insight));
-                console.log("neeraj"+JSON.stringify(insight.data.payload.content));
-                console.log("neeraj"+JSON.stringify(insight));
-                let insight_type="";
-                let helping_verb="";
-                if(insight.type=="action_item")
-                {
-                    insight_type= "Action Item"
-                    helping_verb="";
-                }
-                else if(insight.type=="follow_up"){
-                    insight_type="Follow up";
-                    helping_verb="";
-                }
-                else if(insight.type=="question"){
-                    insight_type="Question";
-                    helping_verb="asked";
-                }
-                else
-                {
-                    insight_type=insight.type;
-                    console.log("new insight"+insight_type);
-                }
-
-
-
-
-                interInsight+=`
-                <div style="background-color: rgba(30, 164, 253, 0.1); margin: 15px; padding: 8px; color: rgba(0, 0, 0, 1);">
-    <div style="font-weight: bold;font-family: Helvetica;font-style: normal; font-size: 16px;line-height: 14px;letter-spacing: 0.04em;text-align: left; margin-bottom: 5px;"> ${insight_type} </div>
-    <div style="padding: 2px; font-size:14px ;font-family: Helvetica"> ${insight.data.payload.content} </div>
-    <div style="text-align: right; font-weight: 200; font-size: 10px; margin-left: 15px;"> ${new Date().toLocaleString()} </div>
-</div>
-                `;
-                console.log(interInsight);
-                if(document.getElementById("ST2")){
-                document.getElementById("ST2").innerHTML=interInsight;}
-            }
-        };
-        symbl.subscribeToInsightEvents(insightHandler);
-    const topicHandler = {
-        onTopicCreated: (topic) => {
-
-
-            Emitter.emit('symblToken', Symbl.ACCESS_TOKEN);
-            Emitter.emit('conversationId', sS._conversationId);
-
-            // insight.createElement();
-            console.log("checking score"+topic.score);
-            console.log("topic_created"+JSON.stringify(topic));
-            if(topic.data.score>=0.1) {
-               // Emitter.on('topic_created', JSON.stringify(topic));
-            }
-
-            const div = document.createElement("div");
-            div.innerHTML = `
-                    <div style="background-color: rgba(0,0,0,.5); margin: 15px; padding: 8px; color: rgb(255,255,255);">
-                        <div style="font-weight: bold; text-align: center; margin-bottom: 5px;"> ${topic} </div>
-                        <div style="font-weight: bold; border-bottom: 1px solid white; margin-left: -5px; margin-right: -5px;"> </div>
-                        <div style="padding: 10px; "> ${topic.phrases} </div>
-                        <div style="text-align: right; font-weight: 400; font-size: 12px; margin-left: 15px;"> ${new Date().toLocaleString()} </span>
-                    </div>
-                        `;
-            topic.element = div;
-            const container = document.getElementById("transcriptContainer");
-            topic.add(container);
-            let insight_type="";
-            let helping_verb="";
-
-           // settcps(topic.phrases);
-
-
-            interTopic += `<div style="background-color: rgba(0,0,0,.5); margin: 15px; padding: 8px; color: rgb(255,255,255);">
-                        <div style="font-weight: bold; text-align: left; margin-bottom: 5px;"> ${insight_type} </div>
-                        <div style="text-align:left; "> ${topic} ${helping_verb} </div>
-                        <div style=" "> ${topic} </div>
-                        <div style="text-align: right; font-weight: 400; font-size: 12px; margin-left: 15px;"> ${new Date().toLocaleString()} </div>
-                    </div>`;
-            console.log(interInsight);
-            if(document.getElementById("ST2")){
-                document.getElementById("ST2").innerHTML=interInsight;}
-        }
-    };
-    symbl.subscribeToTopicEvents(topicHandler);
-        const transcriptHandler = {
-            onTranscriptCreated: transcript => {
-                const div = document.createElement("div");
-                div.innerHTML = `<div style="background-color: rgba(30, 164, 253, 0.1); margin: 15px; padding: 8px; color: rgba(0, 0, 0, 1);">
-                        <div style="font-weight: bold;"> ${transcript.userName}</div>
-                        <div style="padding: 10px;"> ${transcript.message} </div>
-                        <div style="text-align: right; font-weight: 400; font-size: 12px; margin-left: 15px;"> ${new Date(transcript.timeStamp).toLocaleString()} </div>
-                        </div>`;
-                const container = document.getElementById(
-                    "transcriptContainer"
-                );
-                interTranscript+=`<div style="background-color: rgba(30, 164, 253, 0.1); margin: 15px; padding: 8px; color: rgba(0, 0, 0, 1);">
-                        <div style="font-weight: bold;font-family: Helvetica;font-style: normal; font-size: 16px;padding: 2px"> ${transcript.userName}</div>
-                        <div style="padding: 2px; font-size:14px ;font-family: Helvetica"> ${transcript.message} </div>
-                        <div style="text-align: right; font-weight: 200; font-size: 11px; margin-left: 15px;"> ${new Date(transcript.timeStamp).toLocaleString()} </div>
-                        </div>`;
-                if(document.getElementById("ST")!=null) {
-                    document.getElementById("ST").innerHTML = interTranscript;
-                }
-
-                //container.appendChild(div);
-            }
-        };
-        symbl.subscribeToTranscriptEvents(transcriptHandler);
-
         var _caption = '';
         const captioningHandler = {
             onCaptioningToggled: ccEnabled => {
@@ -278,7 +156,7 @@ export async function SendStream(channelName,optionalUid,optionalInfo) {
         };
         symbl.subscribeToCaptioningEvents(captioningHandler);
 
-    let sS = await symbl.start();
+     sS = await symbl.start();
 
 
 

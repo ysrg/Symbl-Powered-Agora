@@ -11,9 +11,12 @@ import {MaxUidConsumer} from "../../agora-rn-uikit/src/MaxUidContext";
 import {UserrIdToUSernameMappring} from "../../bridge/rtc/web/UserrIdToUSername";
 import {Symbl} from "../../bridge/rtc/web/symbl";
 import {cci} from "../../bridge/rtc/web/SendStream";
-import {getInterTranscript} from "../../bridge/rtc/web/SendStream"
+import {getInterTranscript, SendStream} from "../../bridge/rtc/web/SendStream"
 import {getInterInsight} from "../../bridge/rtc/web/SendStream"
 import SymblTopicTagCloud from "../components/SymblTopicCloud/SymblTopicTagCloud";
+import { useTranscript } from '../hooks';
+import Transcript from "./Transcript";
+import Insights from "./Insights";
 
 let cc='';
 interface ccc {
@@ -65,9 +68,7 @@ const getContent = (data) => {
  export default function SymblTranscript  (props: any)  {
     const {primaryColor} = useContext(ColorContext);
      console.log("symbl value",symbl);
-    const {setTranscriptDisplayed} = props;
-    const{username}=props;
-    const {interTranscript}=props;
+     const { interTranscript, show, usernameshow, setTranscriptDisplayed, username } = props;
     const [insightActive, setInsightActive] = useState(false);
     const [transcriptActive, setTranscriptActive] = useState(false);
     const [topicActive,setTopicActive]=useState(false);
@@ -75,7 +76,7 @@ const getContent = (data) => {
 
     const [closedCaptionResponse,setClosedCaptionResponse]=useState({});
 
-    console.log("symbl value"+symbl);
+    const { transcriptItems, insights } = useTranscript();
 
     //////
 
@@ -182,7 +183,7 @@ const getContent = (data) => {
     let toggle = false;
 
 
-    return (
+     return show ? (
 
         <View style={Platform.OS === 'web' ? style.chatView : style.chatViewNative}>
             <View style={style.heading}>
@@ -256,23 +257,11 @@ const getContent = (data) => {
             </View>
             {
                 transcriptActive ? (
-                    <div>
-                        <div></div>
-                        <span id="ST" >
-
-                        </span>
-                    </div>
+                     <Transcript transcript={transcriptItems} />
                 ) :
                     (<>{
                         (insightActive ? (
-                                <div>
-                                    <div></div>
-                                    <span id="ST2">
-
-                                        <div></div>
-
-                                    </span>
-                                </div>) :
+                             <Insights insights={insights} />) :
                             (<>{
                                 (topicActive ? (
                                         <SymblTopicTagCloud></SymblTopicTagCloud>
@@ -288,7 +277,7 @@ const getContent = (data) => {
         </View>
 
 
-    );
+    ) : '';
 
 }
 
