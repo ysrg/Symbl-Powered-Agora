@@ -1,10 +1,10 @@
-import React, {useState, useContext, useEffect, useRef} from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import RtmEngine from 'agora-react-native-rtm';
 import PropsContext from '../../agora-rn-uikit/src/PropsContext';
-import ChatContext, {controlMessageEnum} from './ChatContext';
+import ChatContext, { controlMessageEnum } from './ChatContext';
 import RtcContext from '../../agora-rn-uikit/src/RtcContext';
-import {messageStoreInterface} from '../components/ChatContext';
-import {Platform} from 'react-native';
+import { messageStoreInterface } from '../components/ChatContext';
+import { Platform } from 'react-native';
 
 enum mType {
   Control = '0',
@@ -12,18 +12,18 @@ enum mType {
 }
 
 const RtmConfigure = (props: any) => {
-  const {setRecordingActive, callActive, name} = props;
-  const {rtcProps} = useContext(PropsContext);
-  const {dispatch} = useContext(RtcContext);
+  const { setRecordingActive, callActive, name } = props;
+  const { rtcProps } = useContext(PropsContext);
+  const { dispatch } = useContext(RtcContext);
   const [messageStore, setMessageStore] = useState<messageStoreInterface[]>([]);
   const [privateMessageStore, setPrivateMessageStore] = useState({});
   const [login, setLogin] = useState<boolean>(false);
   const [userList, setUserList] = useState({});
-  let engine = useRef<RtmEngine>(null!);
-  let localUid = useRef<string>('');
+  const engine = useRef<RtmEngine>(null!);
+  const localUid = useRef<string>('');
   const addMessageToStore = (uid: string, text: string, ts: string) => {
     setMessageStore((m: messageStoreInterface[]) => {
-      return [...m, {ts: ts, uid: uid, msg: text}];
+      return [...m, { ts: ts, uid: uid, msg: text }];
     });
   };
 
@@ -34,17 +34,17 @@ const RtmConfigure = (props: any) => {
     local: boolean,
   ) => {
     setPrivateMessageStore((state: any) => {
-      let newState = {...state};
+      let newState = { ...state };
       newState[uid] !== undefined
         ? (newState[uid] = [
             ...newState[uid],
-            {ts: ts, uid: local ? localUid.current : uid, msg: text},
+            { ts: ts, uid: local ? localUid.current : uid, msg: text },
           ])
         : (newState = {
             ...newState,
-            [uid]: [{ts: ts, uid: local ? localUid.current : uid, msg: text}],
+            [uid]: [{ ts: ts, uid: local ? localUid.current : uid, msg: text }],
           });
-      return {...newState};
+      return { ...newState };
     });
     // console.log(privateMessageStore);
   };
@@ -59,8 +59,8 @@ const RtmConfigure = (props: any) => {
     });
     engine.current.on('channelMemberJoined', (data: any) => {
       engine.current.getUserAttributesByUid(data.uid).then((attr: any) => {
-        console.log({attr});
-        let arr = new Int32Array(1);
+        console.log({ attr });
+        const arr = new Int32Array(1);
         arr[0] = parseInt(data.uid);
         setUserList((prevState) => {
           return {
@@ -78,7 +78,7 @@ const RtmConfigure = (props: any) => {
     //   });
     // });
     engine.current.on('messageReceived', (evt: any) => {
-      let {text} = evt;
+      const { text } = evt;
       // console.log('messageReceived: ', evt);
       if (text[0] === mType.Control) {
         console.log('Control: ', text);
@@ -100,10 +100,10 @@ const RtmConfigure = (props: any) => {
           });
         }
       } else if (text[0] === mType.Normal) {
-        let arr = new Int32Array(1);
+        const arr = new Int32Array(1);
         arr[0] = parseInt(evt.peerId);
         // console.log(evt);
-        let hours = new Date(evt.ts).getHours;
+        const hours = new Date(evt.ts).getHours;
         if (isNaN(hours)) {
           evt.ts = new Date().getTime();
         }
@@ -116,11 +116,11 @@ const RtmConfigure = (props: any) => {
       }
     });
     engine.current.on('channelMessageReceived', (evt) => {
-      let {uid, channelId, text, ts} = evt;
+      let { uid, channelId, text, ts } = evt;
       // if (uid < 0) {
       //   uid = uid + parseInt(0xFFFFFFFF) + 1;
       // }
-      let arr = new Int32Array(1);
+      const arr = new Int32Array(1);
       arr[0] = parseInt(uid);
       Platform.OS ? (uid = arr[0]) : {};
       // console.log(evt);
@@ -161,17 +161,21 @@ const RtmConfigure = (props: any) => {
       token: rtcProps.rtm,
     });
     if (name) {
-      await engine.current.setLocalUserAttributes([{key: 'name', value: name}]);
+      await engine.current.setLocalUserAttributes([
+        { key: 'name', value: name },
+      ]);
     } else {
-      await engine.current.setLocalUserAttributes([{key: 'name', value: 'User'}]);
+      await engine.current.setLocalUserAttributes([
+        { key: 'name', value: 'User' },
+      ]);
     }
     await engine.current.joinChannel(rtcProps.channel);
     engine.current
       .getChannelMembersBychannelId(rtcProps.channel)
       .then((data) => {
         data.members.map(async (member: any) => {
-          let attr = await engine.current.getUserAttributesByUid(member.uid);
-          let arr = new Int32Array(1);
+          const attr = await engine.current.getUserAttributesByUid(member.uid);
+          const arr = new Int32Array(1);
           arr[0] = parseInt(member.uid);
           setUserList((prevState) => {
             return {
@@ -192,15 +196,15 @@ const RtmConfigure = (props: any) => {
       rtcProps.channel,
       mType.Normal + msg,
     );
-    let ts = new Date().getTime();
+    const ts = new Date().getTime();
     addMessageToStore(localUid.current, mType.Normal + msg, ts);
   };
   const sendMessageToUid = async (msg: string, uid: number) => {
     let adjustedUID = uid;
     if (adjustedUID < 0) {
-      adjustedUID = uid + parseInt(0xFFFFFFFF) + 1;
+      adjustedUID = uid + parseInt(0xffffffff) + 1;
     }
-    let ts = new Date().getTime();
+    const ts = new Date().getTime();
     await (engine.current as RtmEngine).sendMessageToPeer({
       peerId: adjustedUID.toString(),
       offline: false,
@@ -218,7 +222,7 @@ const RtmConfigure = (props: any) => {
   const sendControlMessageToUid = async (msg: string, uid: number) => {
     let adjustedUID = uid;
     if (adjustedUID < 0) {
-      adjustedUID = uid + parseInt(0xFFFFFFFF) + 1;
+      adjustedUID = uid + parseInt(0xffffffff) + 1;
     }
     await (engine.current as RtmEngine).sendMessageToPeer({
       peerId: adjustedUID.toString(),
@@ -255,7 +259,8 @@ const RtmConfigure = (props: any) => {
         engine: engine.current,
         localUid: localUid.current,
         userList: userList,
-      }}>
+      }}
+    >
       {login ? props.children : <></>}
     </ChatContext.Provider>
   );

@@ -1,16 +1,16 @@
-import React, {useMemo, useContext, useState} from 'react';
-import {View, Platform, StyleSheet, Text, Dimensions} from 'react-native';
+import React, { useMemo, useContext, useState } from 'react';
+import { View, Platform, StyleSheet, Text, Dimensions } from 'react-native';
 import MinUidContext from '../../agora-rn-uikit/src/MinUidContext';
 import MaxUidContext from '../../agora-rn-uikit/src/MaxUidContext';
-import {MaxVideoView} from '../../agora-rn-uikit/Components';
+import { MaxVideoView } from '../../agora-rn-uikit/Components';
 import chatContext from '../components/ChatContext';
-import Transcript from "./transcript";
-import SymblTopictooltip from "../subComponents/SymblTopicTooltip";
+import Transcript from './transcript';
+import SymblTopictooltip from '../subComponents/SymblTopicTooltip';
 
-const layout = (len: number, isDesktop: boolean = true) => {
+const layout = (len: number, isDesktop = true) => {
   const rows = Math.round(Math.sqrt(len));
   const cols = Math.ceil(len / rows);
-  let [r, c] = isDesktop ? [rows, cols] : [cols, rows];
+  const [r, c] = isDesktop ? [rows, cols] : [cols, rows];
   return {
     matrix:
       len > 0
@@ -21,7 +21,7 @@ const layout = (len: number, isDesktop: boolean = true) => {
             Array(len - (r - 1) * c).fill('X'),
           ]
         : [],
-    dims: {r, c},
+    dims: { r, c },
   };
 };
 
@@ -30,9 +30,9 @@ const layout = (len: number, isDesktop: boolean = true) => {
 const GridVideo = () => {
   const max = useContext(MaxUidContext);
   const min = useContext(MinUidContext);
-  const {userList, localUid} = useContext(chatContext);
+  const { userList, localUid } = useContext(chatContext);
   const users = [...max, ...min];
-  let onLayout = (e: any) => {
+  const onLayout = (e: any) => {
     setDim([e.nativeEvent.layout.width, e.nativeEvent.layout.height]);
   };
   const [dim, setDim] = useState([
@@ -41,13 +41,12 @@ const GridVideo = () => {
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
   const isDesktop = dim[0] > dim[1] + 100;
-  let {matrix, dims} = useMemo(() => layout(users.length, isDesktop), [
+  const { matrix, dims } = useMemo(() => layout(users.length, isDesktop), [
     users.length,
     isDesktop,
   ]);
   return (
     <View style={style.full} onLayout={onLayout}>
-
       {matrix.map((r, ridx) => (
         <View style={style.gridRow} key={ridx}>
           {r.map((c, cidx) => (
@@ -56,7 +55,8 @@ const GridVideo = () => {
                 flex: Platform.OS === 'web' ? 1 / dims.c : 1,
                 marginHorizontal: 'auto',
               }}
-              key={cidx}>
+              key={cidx}
+            >
               <View style={style.gridVideoContainerInner}>
                 <MaxVideoView
                   user={users[ridx * dims.c + cidx]}
@@ -70,18 +70,26 @@ const GridVideo = () => {
                     paddingHorizontal: 8,
                     height: 25,
                     // alignItems: 'flex-start',
-                  }}>
-
-                  <Text textBreakStrategy={'simple'}
-                    style={{color: '#333', lineHeight: 25, fontWeight: '700',width: '100%',alignSelf: 'stretch',
-                    textAlign: 'center',}}>
+                  }}
+                >
+                  <Text
+                    textBreakStrategy={'simple'}
+                    style={{
+                      color: '#333',
+                      lineHeight: 25,
+                      fontWeight: '700',
+                      width: '100%',
+                      alignSelf: 'stretch',
+                      textAlign: 'center',
+                    }}
+                  >
                     {users[ridx * dims.c + cidx].uid === 'local'
                       ? userList[localUid]
                         ? userList[localUid].name + ' '
-                        : "You "
+                        : 'You '
                       : userList[users[ridx * dims.c + cidx].uid]
                       ? userList[users[ridx * dims.c + cidx].uid].name + ' '
-                      : "User "}
+                      : 'User '}
                   </Text>
                   {/* {console.log(
                     '!nax',
@@ -90,17 +98,12 @@ const GridVideo = () => {
                     userList[localUid],
                     users[ridx * dims.c + cidx].uid,
                   )} */}
-
                 </View>
-
               </View>
             </View>
           ))}
-
         </View>
-
       ))}
-
     </View>
   );
 };
@@ -120,5 +123,5 @@ const style = StyleSheet.create({
     flex: 1,
     margin: 1,
   },
-})
+});
 export default GridVideo;

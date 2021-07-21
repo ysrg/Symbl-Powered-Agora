@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -7,7 +7,7 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native';
-import {MinUidConsumer} from '../../agora-rn-uikit/src/MinUidContext';
+import { MinUidConsumer } from '../../agora-rn-uikit/src/MinUidContext';
 import PropsContext from '../../agora-rn-uikit/src/PropsContext';
 import icons from '../assets/icons';
 import Settings from '../components/Settings';
@@ -21,8 +21,8 @@ const {
 } = icons;
 
 const Navbar = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
-  const {rtcProps} = useContext(PropsContext);
+  const { primaryColor } = useContext(ColorContext);
+  const { rtcProps } = useContext(PropsContext);
   const {
     participantsView,
     setParticipantsView,
@@ -37,7 +37,8 @@ const Navbar = (props: any) => {
 
   return (
     <View
-      style={Platform.OS === 'web' ? style.navHolder : style.navHolderNative}>
+      style={Platform.OS === 'web' ? style.navHolder : style.navHolderNative}
+    >
       <View style={style.roomNameContainer}>
         <Text style={style.roomNameText}>{title + ' '}</Text>
       </View>
@@ -59,21 +60,24 @@ const Navbar = (props: any) => {
       ) : (
         <></>
       )} */}
-      <View style={[style.participantBtnHolder, {borderColor: primaryColor}]}>
+      <View style={[style.participantBtnHolder, { borderColor: primaryColor }]}>
         <TouchableOpacity
           onPress={() => {
             chatDisplayed
               ? (setChatDisplayed(false), setParticipantsView(true))
               : setParticipantsView(!participantsView);
           }}
-          style={style.participantBtn}>
+          style={style.participantBtn}
+        >
           <Image
-            source={{uri: participantIcon}}
-            style={[style.participantBtnIcon, {tintColor: primaryColor}]}
+            source={{ uri: participantIcon }}
+            style={[style.participantBtnIcon, { tintColor: primaryColor }]}
           />
           <MinUidConsumer>
             {(minUsers) => (
-              <Text style={[style.participantText, {color: primaryColor}]}>{minUsers.length + 1}</Text>
+              <Text style={[style.participantText, { color: primaryColor }]}>
+                {minUsers.length + 1}
+              </Text>
             )}
           </MinUidConsumer>
         </TouchableOpacity>
@@ -83,10 +87,11 @@ const Navbar = (props: any) => {
           onPress={() => {
             setLayout(!layout);
           }}
-          style={style.layoutBtn}>
+          style={style.layoutBtn}
+        >
           <Image
-            source={{uri: layout ? gridLayoutIcon : pinnedLayoutIcon}}
-            style={[style.layoutBtnIcon, {tintColor: primaryColor}]}
+            source={{ uri: layout ? gridLayoutIcon : pinnedLayoutIcon }}
+            style={[style.layoutBtnIcon, { tintColor: primaryColor }]}
           />
         </TouchableOpacity>
       </View>

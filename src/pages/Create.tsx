@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TextInput,
@@ -9,15 +9,15 @@ import {
   Dimensions,
 } from 'react-native';
 import Checkbox from '../subComponents/Checkbox';
-import {gql, useMutation, useQuery} from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import Logo from '../subComponents/Logo';
 import OpenInNativeButton from '../subComponents/OpenInNativeButton';
 import Share from '../components/Share';
 import ColorContext from '../components/ColorContext';
 import Illustration from '../subComponents/Illustration';
-import {SendStream} from "../../bridge/rtc/web/SendStream";
-import SymblCredentialOptions from "../components/SymblCredentialOptions"
-import {Dialog} from "@material-ui/core";
+import { SendStream } from '../../bridge/rtc/web/SendStream';
+import SymblCredentialOptions from '../components/SymblCredentialOptions';
+import { Dialog } from '@material-ui/core';
 
 type PasswordInput = {
   host: string;
@@ -51,9 +51,8 @@ const SYMBL_RESPONSE = gql`
   }
 `;
 
-
 const Create = () => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const [roomTitle, onChangeRoomTitle] = useState('');
   const [pstnCheckbox, setPstnCheckbox] = useState(false);
   const [hostControlCheckbox, setHostControlCheckbox] = useState(true);
@@ -63,8 +62,8 @@ const Create = () => {
   // const [pstnPin, setPstnPin] = useState(null);
   const [roomCreated, setRoomCreated] = useState(false);
   const [joinPhrase, setJoinPhrase] = useState(null);
-  const [createChannel, {data, loading, error}] = useMutation(CREATE_CHANNEL);
-  const [symblCredOpen,setSymblCredOpen]=useState(true);
+  const [createChannel, { data, loading, error }] = useMutation(CREATE_CHANNEL);
+  const [symblCredOpen, setSymblCredOpen] = useState(true);
   const handleSymblClose = (value) => {
     setSymblCredOpen(false);
   };
@@ -98,15 +97,16 @@ const Create = () => {
     Dimensions.get('window').height,
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
-  let onLayout = (e: any) => {
+  const onLayout = (e: any) => {
     setDim([e.nativeEvent.layout.width, e.nativeEvent.layout.height]);
   };
 
   return (
     <ImageBackground
-      source={{uri: $config.bg}}
+      source={{ uri: $config.bg }}
       style={style.full}
-      resizeMode={'cover'}>
+      resizeMode={'cover'}
+    >
       <View style={style.main}>
         <View style={style.nav}>
           <Logo />
@@ -126,10 +126,16 @@ const Create = () => {
                 top: '30%',
                 marginHorizontal: 'auto',
                 zIndex: 55,
-            }}>
-              <Text style={{alignSelf: 'center'}}>
+              }}
+            >
+              <Text style={{ alignSelf: 'center' }}>
                 <Text
-                  style={{fontWeight: '500', textAlign: 'center', fontSize: 16}}>
+                  style={{
+                    fontWeight: '500',
+                    textAlign: 'center',
+                    fontSize: 16,
+                  }}
+                >
                   {error.name + ' - '}
                 </Text>
                 <Text style={{}}>{error.message}</Text>
@@ -141,12 +147,8 @@ const Create = () => {
           {/* <OpenInNativeButton /> */}
         </View>
 
-
-
         {!roomCreated ? (
-
           <View style={style.content} onLayout={onLayout}>
-
             <View style={style.leftContent}>
               <Text style={style.heading}>Create Meeting</Text>
               <Text style={style.headline}>
@@ -155,7 +157,7 @@ const Create = () => {
               </Text>
               <View style={style.inputs}>
                 <TextInput
-                  style={[style.textInput, {borderColor: primaryColor}]}
+                  style={[style.textInput, { borderColor: primaryColor }]}
                   value={roomTitle}
                   onChangeText={(text) => onChangeRoomTitle(text)}
                   onSubmitEditing={() => createRoom()}
@@ -201,11 +203,12 @@ const Create = () => {
                     roomTitle === '' || loading
                       ? [
                           style.primaryBtnDisabled,
-                          {backgroundColor: primaryColor + '80'},
+                          { backgroundColor: primaryColor + '80' },
                         ]
-                      : [style.primaryBtn, {backgroundColor: primaryColor}]
+                      : [style.primaryBtn, { backgroundColor: primaryColor }]
                   }
-                  onPress={() => createRoom()}>
+                  onPress={() => createRoom()}
+                >
                   <Text style={style.primaryBtnText}>
                     {loading ? 'Loading...' : 'Create Meeting'}
                   </Text>
@@ -237,7 +240,7 @@ const Create = () => {
 };
 
 const style = StyleSheet.create({
-  full: {flex: 1},
+  full: { flex: 1 },
   main: {
     flex: 2,
     justifyContent: 'space-evenly',
@@ -249,7 +252,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  content: {flex: 6, flexDirection: 'row'},
+  content: { flex: 6, flexDirection: 'row' },
   leftContent: {
     width: '100%',
     flex: 1,
@@ -322,7 +325,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 5,
     fontWeight: '700',
   },
-  checkboxCaption: {color: '#333', paddingHorizontal: 5},
+  checkboxCaption: { color: '#333', paddingHorizontal: 5 },
   checkboxTextHolder: {
     marginVertical: 0, //check if 5
     flexDirection: 'column',

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Platform,
@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import ChatContainer from '../subComponents/ChatContainer';
 import ChatInput from '../subComponents/ChatInput';
-import {MinUidConsumer} from '../../agora-rn-uikit/src/MinUidContext';
-import {MaxUidConsumer} from '../../agora-rn-uikit/src/MaxUidContext';
+import { MinUidConsumer } from '../../agora-rn-uikit/src/MinUidContext';
+import { MaxUidConsumer } from '../../agora-rn-uikit/src/MaxUidContext';
 import icons from '../assets/icons';
 import ColorContext from '../components/ColorContext';
 import chatContext from '../components/ChatContext';
 
 const Chat = (props: any) => {
-  const {userList, localUid} = useContext(chatContext);
-  const {setChatDisplayed} = props;
-  const {primaryColor} = useContext(ColorContext);
+  const { userList, localUid } = useContext(chatContext);
+  const { setChatDisplayed } = props;
+  const { primaryColor } = useContext(ColorContext);
   const [groupActive, setGroupActive] = useState(true);
   const [privateActive, setPrivateActive] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({uid: null});
-  console.log("inside chat");
+  const [selectedUser, setSelectedUser] = useState({ uid: null });
+  console.log('inside chat');
   const selectGroup = () => {
     setPrivateActive(false);
     setGroupActive(true);
@@ -39,11 +39,12 @@ const Chat = (props: any) => {
       <View style={style.heading}>
         <TouchableOpacity
           style={style.backButton}
-          onPress={() => setChatDisplayed(false)}>
+          onPress={() => setChatDisplayed(false)}
+        >
           <Image
             resizeMode={'contain'}
             style={style.backIcon}
-            source={{uri: icons.backBtn}}
+            source={{ uri: icons.backBtn }}
           />
           <Text style={style.headingText}>Chats</Text>
         </TouchableOpacity>
@@ -53,7 +54,7 @@ const Chat = (props: any) => {
           onPress={selectGroup}
           style={
             groupActive
-              ? [style.groupActive, {borderColor: primaryColor}]
+              ? [style.groupActive, { borderColor: primaryColor }]
               : [
                   style.group,
                   {
@@ -61,7 +62,8 @@ const Chat = (props: any) => {
                     borderTopColor: primaryColor + '80',
                   },
                 ]
-          }>
+          }
+        >
           <Text style={groupActive ? style.groupTextActive : style.groupText}>
             Group
           </Text>
@@ -70,7 +72,7 @@ const Chat = (props: any) => {
           onPress={selectPrivate}
           style={
             !groupActive
-              ? [style.privateActive, {borderColor: primaryColor}]
+              ? [style.privateActive, { borderColor: primaryColor }]
               : [
                   style.private,
                   {
@@ -78,7 +80,8 @@ const Chat = (props: any) => {
                     borderTopColor: primaryColor + '80',
                   },
                 ]
-          }>
+          }
+        >
           <Text style={!groupActive ? style.groupTextActive : style.groupText}>
             Private
           </Text>
@@ -102,7 +105,8 @@ const Chat = (props: any) => {
                           <TouchableOpacity
                             style={style.participantContainer}
                             key={user.uid}
-                            onPress={() => selectUser(user)}>
+                            onPress={() => selectUser(user)}
+                          >
                             <Text style={style.participantText}>
                               {userList[user.uid]
                                 ? userList[user.uid].name + ' '

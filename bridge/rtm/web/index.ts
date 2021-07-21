@@ -1,4 +1,4 @@
-import AgoraRTM, {VERSION} from 'agora-rtm-sdk';
+import AgoraRTM, { VERSION } from 'agora-rtm-sdk';
 
 export default class RtmEngine {
   public appId: string;
@@ -72,7 +72,7 @@ export default class RtmEngine {
     this.client = AgoraRTM.createInstance(this.appId);
 
     this.client.on('ConnectionStateChanged', (state, reason) => {
-      this.clientEventsMap.get('connectionStateChanged')({state, reason});
+      this.clientEventsMap.get('connectionStateChanged')({ state, reason });
     });
 
     this.client.on('MessageFromPeer', (msg, uid, msgProps) => {
@@ -141,7 +141,7 @@ export default class RtmEngine {
     });
   }
 
-  async login(loginParam: {uid: string, token?: string}): Promise<any> {
+  async login(loginParam: { uid: string; token?: string }): Promise<any> {
     return this.client.login(loginParam);
   }
 
@@ -151,13 +151,23 @@ export default class RtmEngine {
 
   async joinChannel(channelId: string): Promise<any> {
     this.channelMap.set(channelId, this.client.createChannel(channelId));
-    this.channelMap.get(channelId).on('ChannelMessage', (msg: {text: string}, uid: string, messagePros) => {
-        let text = msg.text;
-        let ts = messagePros.serverReceivedTs;
-        this.channelEventsMap.get('channelMessageReceived')({uid, channelId, text, ts});
-      });
+    this.channelMap
+      .get(channelId)
+      .on(
+        'ChannelMessage',
+        (msg: { text: string }, uid: string, messagePros) => {
+          let text = msg.text;
+          let ts = messagePros.serverReceivedTs;
+          this.channelEventsMap.get('channelMessageReceived')({
+            uid,
+            channelId,
+            text,
+            ts,
+          });
+        },
+      );
     this.channelMap.get(channelId).on('MemberJoined', (uid: string) => {
-      this.channelEventsMap.get('channelMemberJoined')({uid, channelId});
+      this.channelEventsMap.get('channelMemberJoined')({ uid, channelId });
     });
     this.channelMap.get(channelId).on('MemberLeft', (uid: string) => {
       this.channelEventsMap.get('channelMemberLeft')(uid);
@@ -175,7 +185,7 @@ export default class RtmEngine {
 
   async sendMessageByChannelId(channel: string, message: string): Promise<any> {
     if (this.channelMap.get(channel)) {
-      return this.channelMap.get(channel).sendMessage({text: message});
+      return this.channelMap.get(channel).sendMessage({ text: message });
     } else {
       console.log(this.channelMap, channel);
       Promise.reject('Wrong channel');
@@ -206,7 +216,7 @@ export default class RtmEngine {
           });
         });
       });
-      return {members: memberArray};
+      return { members: memberArray };
     } else {
       Promise.reject('Wrong channel');
     }
@@ -222,7 +232,7 @@ export default class RtmEngine {
         });
       });
     });
-    return {items: peerArray};
+    return { items: peerArray };
   }
 
   async renewToken(token: string) {
@@ -234,7 +244,7 @@ export default class RtmEngine {
     await this.client
       .getUserAttributes(uid)
       .then((attributes: string) => {
-        response = {attributes, uid};
+        response = { attributes, uid };
       })
       .catch((e: any) => {
         Promise.reject(e);
@@ -257,7 +267,7 @@ export default class RtmEngine {
       let value = Object.values(attribute)[1];
       formattedAttributes[key] = value;
     });
-    return this.client.setLocalUserAttributes({...formattedAttributes});
+    return this.client.setLocalUserAttributes({ ...formattedAttributes });
   }
 
   async setLocalUserAttributes(attributes: string[]) {
@@ -265,10 +275,10 @@ export default class RtmEngine {
     attributes.map((attribute) => {
       let key = Object.values(attribute)[0];
       let value = Object.values(attribute)[1];
-      formattedAttributes = {[key]: value};
+      formattedAttributes = { [key]: value };
       // console.log('!!!!formattedAttributes', formattedAttributes, key, value);
     });
-    return this.client.setLocalUserAttributes({...formattedAttributes});
+    return this.client.setLocalUserAttributes({ ...formattedAttributes });
   }
 
   async sendLocalInvitation(invitationProps: any) {
@@ -335,7 +345,7 @@ export default class RtmEngine {
     text: string;
   }) {
     return this.client.sendMessageToPeer(
-      {text: AgoraPeerMessage.text},
+      { text: AgoraPeerMessage.text },
       AgoraPeerMessage.peerId,
     );
     //check promise result

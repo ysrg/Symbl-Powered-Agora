@@ -3,7 +3,7 @@ import CheckBox from '@react-native-community/checkbox';
 import ColorContext from '../components/ColorContext';
 
 const Checkbox = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const urlCheckbox = props.value;
   const setUrlCheckbox = props.onValueChange;
   return (

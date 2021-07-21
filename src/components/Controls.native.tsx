@@ -22,7 +22,7 @@ const Controls = (props: any) => {
   const recordingActive = props.recordingActive;
   const setChatDisplayed = props.setChatDisplayed;
   const chatDisplayed = props.chatDisplayed;
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   return (
     <LocalUserContext>
       <View style={style.bottomBar}>
@@ -34,13 +34,14 @@ const Controls = (props: any) => {
         />
         <SwitchCamera />
         <TouchableOpacity
-          style={[style.localButton, {borderColor: primaryColor}]}
+          style={[style.localButton, { borderColor: primaryColor }]}
           onPress={() => {
             setChatDisplayed(!chatDisplayed);
-          }}>
+          }}
+        >
           <Image
-            source={{uri: icons.chatIcon}}
-            style={[style.buttonIcon, {tintColor: primaryColor}]}
+            source={{ uri: icons.chatIcon }}
+            style={[style.buttonIcon, { tintColor: primaryColor }]}
           />
         </TouchableOpacity>
         <Endcall />

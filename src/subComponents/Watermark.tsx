@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 
 const Watermark = () => {
   return (
     // <View>
     <Image
-      source={{uri: $config.logo}}
+      source={{ uri: $config.logo }}
       style={{
         position: 'absolute',
         bottom: '2%',

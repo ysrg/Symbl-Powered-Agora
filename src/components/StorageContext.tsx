@@ -1,4 +1,9 @@
-import React, {createContext, ReactChildren, useEffect, useState} from 'react';
+import React, {
+  createContext,
+  ReactChildren,
+  useEffect,
+  useState,
+} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import useMount from './useMount';
 //import SymblContext from '../../bridge/rtc/web/useSymblContext';
@@ -28,7 +33,7 @@ export default StorageContext;
 
 export const StorageConsumer = StorageContext.Consumer;
 
-export const StorageProvider = (props: {children: React.ReactNode}) => {
+export const StorageProvider = (props: { children: React.ReactNode }) => {
   const [ready, setReady] = useState(false);
   const [store, setStore] = useState<StoreInterface>(initStoreValue);
   //const [closedCaption,setClosedCaption]=useState(SymblContext);
@@ -67,7 +72,7 @@ export const StorageProvider = (props: {children: React.ReactNode}) => {
     ready && syncStore();
   }, [store, ready]);
   return (
-    <StorageContext.Provider value={{store, setStore}}>
+    <StorageContext.Provider value={{ store, setStore }}>
       {ready ? props.children : <></>}
     </StorageContext.Provider>
   );

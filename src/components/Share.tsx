@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -7,7 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import ColorContext from '../components/ColorContext';
-import {useHistory} from './Router';
+import { useHistory } from './Router';
 import Clipboard from '../subComponents/Clipboard';
 import Illustration from '../subComponents/Illustration';
 import platform from '../subComponents/Platform';
@@ -22,8 +22,8 @@ const Share = (props: any) => {
     roomTitle,
     hostControlCheckbox,
   } = props;
-  const {primaryColor} = useContext(ColorContext);
-  const symblToken= window.localStorage.getItem("symblTokenBE");
+  const { primaryColor } = useContext(ColorContext);
+  const symblToken = window.localStorage.getItem('symblTokenBE');
 
   const enterMeeting = () => {
     if (urlHost) {
@@ -67,7 +67,7 @@ PSTN Pin: ${pstn.dtmf}`)
     Dimensions.get('window').height,
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
-  let onLayout = (e: any) => {
+  const onLayout = (e: any) => {
     setDim([e.nativeEvent.layout.width, e.nativeEvent.layout.height]);
   };
 
@@ -83,7 +83,7 @@ PSTN Pin: ${pstn.dtmf}`)
                 : 'URL for Attendee:'}
             </Text>
             <View style={style.urlHolder}>
-              <Text style={style.url} >
+              <Text style={style.url}>
                 {$config.frontEndURL
                   ? `${$config.frontEndURL}/${urlView}`
                   : platform === 'web'
@@ -130,15 +130,17 @@ PSTN Pin: ${pstn.dtmf}`)
           <></>
         )}
         <TouchableOpacity
-          style={[style.secondaryBtn, {borderColor: primaryColor}]}
-          onPress={() => copyToClipboard()}>
-          <Text style={[style.secondaryBtnText, {color: primaryColor}]}>
+          style={[style.secondaryBtn, { borderColor: primaryColor }]}
+          onPress={() => copyToClipboard()}
+        >
+          <Text style={[style.secondaryBtnText, { color: primaryColor }]}>
             Copy to clipboard
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[style.primaryBtn, {backgroundColor: primaryColor}]}
-          onPress={() => enterMeeting()}>
+          style={[style.primaryBtn, { backgroundColor: primaryColor }]}
+          onPress={() => enterMeeting()}
+        >
           <Text style={style.primaryBtnText}>Enter Meeting (as host)</Text>
         </TouchableOpacity>
       </View>
@@ -155,12 +157,12 @@ PSTN Pin: ${pstn.dtmf}`)
 };
 
 const style = StyleSheet.create({
-  full: {flex: 1},
+  full: { flex: 1 },
   main: {
     flex: 2,
     justifyContent: 'space-evenly',
     marginHorizontal: '10%',
-    maxHeight: '80%'
+    maxHeight: '80%',
   },
   nav: {
     flex: 1,
@@ -168,7 +170,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  content: {flex: 6, flexDirection: 'row'},
+  content: { flex: 6, flexDirection: 'row' },
   leftContent: {
     width: '100%',
     flex: 1,
@@ -176,7 +178,7 @@ const style = StyleSheet.create({
     marginBottom: '5%',
     marginRight: '5%',
     marginHorizontal: 'auto',
-    maxHeight: '70%'
+    maxHeight: '70%',
   },
   heading: {
     fontSize: 38,
@@ -242,7 +244,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 5,
     fontWeight: '700',
   },
-  checkboxCaption: {color: '#333', paddingHorizontal: 5},
+  checkboxCaption: { color: '#333', paddingHorizontal: 5 },
   checkboxTextHolder: {
     marginVertical: 0, //check if 5
     flexDirection: 'column',
@@ -264,9 +266,8 @@ const style = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     textDecorationLine: 'underline',
-    maxHeight:80,
-    overflow:"auto"
-
+    maxHeight: 80,
+    overflow: 'auto',
   },
   pstnHolder: {
     flexDirection: 'row',

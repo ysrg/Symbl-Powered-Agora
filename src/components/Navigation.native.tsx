@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {Linking} from 'react-native';
-import {useHistory} from './Router.native';
-import {BackButton} from './Router.native';
+import React, { useEffect } from 'react';
+import { Linking } from 'react-native';
+import { useHistory } from './Router.native';
+import { BackButton } from './Router.native';
 
 const processUrl = (url: string): string => {
   return url

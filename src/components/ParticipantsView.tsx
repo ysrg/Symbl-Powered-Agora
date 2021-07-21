@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {MinUidConsumer} from '../../agora-rn-uikit/src/MinUidContext';
-import {MaxUidConsumer} from '../../agora-rn-uikit/src/MaxUidContext';
+import { MinUidConsumer } from '../../agora-rn-uikit/src/MinUidContext';
+import { MaxUidConsumer } from '../../agora-rn-uikit/src/MaxUidContext';
 import LocalAudioMute from '../subComponents/LocalAudioMute';
 import LocalVideoMute from '../subComponents/LocalVideoMute';
 import LocalUserContext from '../../agora-rn-uikit/src/LocalUserContext';
@@ -18,11 +18,11 @@ import RemoteEndCall from '../subComponents/RemoteEndCall';
 import chatContext from '../components/ChatContext';
 import Clipboard from '../subComponents/Clipboard';
 import ColorContext from '../components/ColorContext';
-import {useParams} from './Router';
-import {gql, useQuery} from '@apollo/client';
+import { useParams } from './Router';
+import { gql, useQuery } from '@apollo/client';
 import icons from '../assets/icons';
 import platform from '../subComponents/Platform';
-import Transcript from "./transcript";
+import Transcript from './transcript';
 
 const SHARE = gql`
   query share($passphrase: String!) {
@@ -42,13 +42,13 @@ const SHARE = gql`
 `;
 
 const ParticipantView = (props: any) => {
-  const {userList, localUid} = useContext(chatContext);
-  const {primaryColor} = useContext(ColorContext);
-  const {phrase} = useParams();
-  const {data, loading, error} = useQuery(SHARE, {
-    variables: {passphrase: phrase},
+  const { userList, localUid } = useContext(chatContext);
+  const { primaryColor } = useContext(ColorContext);
+  const { phrase } = useParams();
+  const { data, loading, error } = useQuery(SHARE, {
+    variables: { passphrase: phrase },
   });
-  const symblToken= window.localStorage.getItem("symblTokenBE");
+  const symblToken = window.localStorage.getItem('symblTokenBE');
   const copyToClipboard = () => {
     if (data && !loading) {
       let stringToCopy = '';
@@ -79,14 +79,16 @@ PSTN Pin: ${data.share.pstn.dtmf}`)
         Platform.OS === 'web'
           ? style.participantView
           : style.participantViewNative
-      }>
+      }
+    >
       <TouchableOpacity
         style={style.backButton}
-        onPress={() => props.setParticipantsView(false)}>
+        onPress={() => props.setParticipantsView(false)}
+      >
         <Image
           resizeMode={'contain'}
           style={style.backIcon}
-          source={{uri: icons.backBtn}}
+          source={{ uri: icons.backBtn }}
         />
         <Text style={style.heading}>Participants</Text>
       </TouchableOpacity>
@@ -97,7 +99,6 @@ PSTN Pin: ${data.share.pstn.dtmf}`)
               [...minUsers, ...maxUser].map((user) =>
                 user.uid !== 'local' ? (
                   <View style={style.participantContainer} key={user.uid}>
-
                     <Text style={style.participantText}>
                       {userList[user.uid]
                         ? userList[user.uid].name + ' '
@@ -116,7 +117,6 @@ PSTN Pin: ${data.share.pstn.dtmf}`)
                       />
                       <RemoteEndCall uid={user.uid} isHost={props.isHost} />
                     </View>
-
                   </View>
                 ) : (
                   <View style={style.participantContainer} key={user.uid}>
@@ -135,19 +135,18 @@ PSTN Pin: ${data.share.pstn.dtmf}`)
                 ),
               )
             }
-
           </MaxUidConsumer>
         )}
       </MinUidConsumer>
 
       <TouchableOpacity
-        style={[style.secondaryBtn, {borderColor: primaryColor}]}
-        onPress={() => copyToClipboard()}>
-        <Text style={[style.secondaryBtnText, {color: primaryColor}]}>
+        style={[style.secondaryBtn, { borderColor: primaryColor }]}
+        onPress={() => copyToClipboard()}
+      >
+        <Text style={[style.secondaryBtnText, { color: primaryColor }]}>
           {!data ? 'Getting Data' : 'Copy joining details'}
         </Text>
       </TouchableOpacity>
-
     </View>
   );
 };

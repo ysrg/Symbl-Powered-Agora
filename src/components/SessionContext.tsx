@@ -1,5 +1,5 @@
-import React, {createContext, useState} from 'react';
-import {useHistory} from '../components/Router';
+import React, { createContext, useState } from 'react';
+import { useHistory } from '../components/Router';
 // interface SessionStoreInterface {
 //   channel: string | null;
 //   isHost: boolean | null;
@@ -13,7 +13,9 @@ interface SessionContextInterface {
   // setSessionStore: React.Dispatch<React.SetStateAction<SessionStoreInterface>> | null;
   joinSession: (arg0: joinSessionInterface) => void;
   joinStore: joinSessionInterface;
-  setJoinStore: React.Dispatch<React.SetStateAction<joinSessionInterface>> | null;
+  setJoinStore: React.Dispatch<
+    React.SetStateAction<joinSessionInterface>
+  > | null;
 }
 
 interface joinSessionInterface {
@@ -54,10 +56,12 @@ export default SessionContext;
 
 export const StorageConsumer = SessionContext.Consumer;
 
-export const SessionProvider = (props: {children: React.ReactNode}) => {
+export const SessionProvider = (props: { children: React.ReactNode }) => {
   const history = useHistory();
   // const [sessionStore, setSessionStore] = useState<SessionStoreInterface>(initStoreValue);
-  const [joinStore, setJoinStore] = useState<joinSessionInterface>(initJoinStoreValue);
+  const [joinStore, setJoinStore] = useState<joinSessionInterface>(
+    initJoinStoreValue,
+  );
   const joinSession = (data: joinSessionInterface) => {
     setJoinStore(data);
     // console.log({data});
@@ -71,7 +75,8 @@ export const SessionProvider = (props: {children: React.ReactNode}) => {
         joinSession,
         joinStore,
         setJoinStore,
-      }}>
+      }}
+    >
       {true ? props.children : <></>}
     </SessionContext.Provider>
   );

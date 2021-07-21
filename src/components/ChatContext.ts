@@ -1,5 +1,5 @@
 import RtmEngine from 'agora-react-native-rtm';
-import {createContext} from 'react';
+import { createContext } from 'react';
 
 export interface channelMessage {
   type: string;

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import MaxUidContext from '../../agora-rn-uikit/src/MaxUidContext';
-import {MaxVideoView} from '../../agora-rn-uikit/Components';
+import { MaxVideoView } from '../../agora-rn-uikit/Components';
 import {
   LocalAudioMute,
   LocalVideoMute,
@@ -17,20 +17,21 @@ import {
 import LocalUserContext from '../../agora-rn-uikit/src/LocalUserContext';
 import RtcContext from '../../agora-rn-uikit/src/RtcContext';
 import ColorContext from '../components/ColorContext';
-import {useHistory} from './Router';
+import { useHistory } from './Router';
 
 const Precall = (props: any) => {
   const history = useHistory();
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const maxUsers = useContext(MaxUidContext);
   const rtc = useContext(RtcContext);
   rtc.RtcEngine.startPreview();
-  const {setCallActive, queryComplete, username, setUsername, error} = props;
+  const { setCallActive, queryComplete, username, setUsername, error } = props;
   return (
     <ImageBackground
-      source={{uri: $config.bg}}
+      source={{ uri: $config.bg }}
       style={style.full}
-      resizeMode={'cover'}>
+      resizeMode={'cover'}
+    >
       <View style={style.heading}>
         <Text style={style.headingText}>Precall </Text>
       </View>
@@ -51,26 +52,30 @@ const Precall = (props: any) => {
             marginHorizontal: 'auto',
             left: '20%',
             zIndex: 55,
-          }}>
-          <Text style={{alignSelf: 'center'}}>
+          }}
+        >
+          <Text style={{ alignSelf: 'center' }}>
             <Text
               style={{
                 fontWeight: '500',
                 textAlign: 'center',
                 fontSize: 16,
-              }}>
+              }}
+            >
               {error.name + ' - '}
             </Text>
             <Text style={{}}>{error.message}</Text>
           </Text>
           <TouchableOpacity
-            style={{alignSelf: 'center'}}
-            onPress={() => history.replace('./')}>
+            style={{ alignSelf: 'center' }}
+            onPress={() => history.replace('./')}
+          >
             <Text
               style={{
                 fontWeight: '500',
                 textDecorationLine: 'underline',
-              }}>
+              }}
+            >
               {'Go back '}
             </Text>
           </TouchableOpacity>
@@ -83,7 +88,7 @@ const Precall = (props: any) => {
       </View>
       <View style={style.textInputHolder}>
         <TextInput
-          style={[style.textInput, {borderColor: primaryColor}]}
+          style={[style.textInput, { borderColor: primaryColor }]}
           value={username}
           onChangeText={(text) => {
             if (username !== 'Getting name...') {
@@ -109,9 +114,10 @@ const Precall = (props: any) => {
         disabled={!queryComplete}
         style={
           queryComplete
-            ? [style.buttonActive, {backgroundColor: primaryColor}]
-            : [style.buttonDisabled, {backgroundColor: primaryColor + '80'}]
-        }>
+            ? [style.buttonActive, { backgroundColor: primaryColor }]
+            : [style.buttonDisabled, { backgroundColor: primaryColor + '80' }]
+        }
+      >
         <Text style={style.buttonText}>
           {queryComplete ? 'Join Room' : 'Loading...'}
         </Text>
@@ -121,8 +127,8 @@ const Precall = (props: any) => {
 };
 
 const style = StyleSheet.create({
-  full: {flex: 1},
-  heading: {flex: 0.1, justifyContent: 'center'},
+  full: { flex: 1 },
+  heading: { flex: 0.1, justifyContent: 'center' },
   headingText: {
     fontSize: 24,
     color: '#333',
@@ -147,8 +153,13 @@ const style = StyleSheet.create({
     minHeight: 45,
     alignSelf: 'center',
   },
-  controls: {flex: 0.2, flexDirection: 'row', alignSelf: 'center', padding: 5},
-  width50: {width: 50},
+  controls: {
+    flex: 0.2,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    padding: 5,
+  },
+  width50: { width: 50 },
   buttonActive: {
     backgroundColor: '#099DFD',
     height: 50,

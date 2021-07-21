@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import React, { useContext } from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import StorageContext from '../components/StorageContext';
-import {useHistory} from '../components/Router';
-import {gql, useMutation} from '@apollo/client';
+import { useHistory } from '../components/Router';
+import { gql, useMutation } from '@apollo/client';
 
 const LOGOUT = gql`
   mutation logoutSession($token: String!) {
@@ -11,15 +11,15 @@ const LOGOUT = gql`
 `;
 
 const LogoutButton = (props: any) => {
-  const {setError} = props;
-  const {store, setStore} = useContext(StorageContext);
-  const {token} = store;
+  const { setError } = props;
+  const { store, setStore } = useContext(StorageContext);
+  const { token } = store;
   const history = useHistory();
   const [logoutQuery] = useMutation(LOGOUT);
 
   const logout = () => {
-    setStore({token: null});
-    logoutQuery({variables: {token}}).catch((e) => {
+    setStore({ token: null });
+    logoutQuery({ variables: { token } }).catch((e) => {
       // setError(e);
       console.log(e);
     });

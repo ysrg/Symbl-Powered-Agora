@@ -13,10 +13,10 @@ export const useTranscript = () => {
     },
   };
   const insightHandler = {
-    onInsightCreated: ({ data: {id, payload, ...rest}}) => {
-      const insightObj = { id, payload, ...rest }
+    onInsightCreated: ({ data: { id, payload, ...rest } }) => {
+      const insightObj = { id, payload, ...rest };
       setInsights((prev) => [...prev, insightObj]);
-    }
+    },
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -34,5 +34,5 @@ export const useTranscript = () => {
     };
     fetchData();
   }, []);
-  return {transcriptItems, insights};
+  return { transcriptItems, insights };
 };

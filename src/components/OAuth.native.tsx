@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {Text, Platform, Linking} from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, Platform, Linking } from 'react-native';
 
 import InAppBrowser from 'react-native-inappbrowser-reborn';
-import {useHistory} from './Router';
+import { useHistory } from './Router';
 
 const oauth = {
   client_id: $config.CLIENT_ID,
@@ -24,7 +24,7 @@ const processUrl = (url: string): string => {
 };
 
 const Oauth = () => {
-  let history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     console.log('mobile OAuth in ', Platform.OS);

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   TextInput,
@@ -8,14 +8,14 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {useHistory} from '../components/Router';
+import { useHistory } from '../components/Router';
 import SessionContext from '../components/SessionContext';
 import OpenInNativeButton from '../subComponents/OpenInNativeButton';
 import Logo from '../subComponents/Logo';
 import LogoutButton from '../subComponents/LogoutButton';
 import ColorContext from '../components/ColorContext';
 import Illustration from '../subComponents/Illustration';
-import SymblCredentialOptions from "../components/SymblCredentialOptions";
+import SymblCredentialOptions from '../components/SymblCredentialOptions';
 import 'regenerator-runtime/runtime';
 
 // const joinFlag = 0;
@@ -25,10 +25,10 @@ interface joinProps {
 }
 const Join = (props: joinProps) => {
   const history = useHistory();
-  const {primaryColor} = useContext(ColorContext);
-  const {joinSession} = useContext(SessionContext);
+  const { primaryColor } = useContext(ColorContext);
+  const { joinSession } = useContext(SessionContext);
   const [error, setError] = useState(null);
-  const [symblCredOpen,setSymblCredOpen]=useState(true);
+  const [symblCredOpen, setSymblCredOpen] = useState(true);
   const handleSymblClose = (value) => {
     setSymblCredOpen(false);
   };
@@ -37,7 +37,7 @@ const Join = (props: joinProps) => {
     Dimensions.get('window').height,
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
-  let onLayout = (e: any) => {
+  const onLayout = (e: any) => {
     setDim([e.nativeEvent.layout.width, e.nativeEvent.layout.height]);
   };
   const createMeeting = () => {
@@ -47,20 +47,19 @@ const Join = (props: joinProps) => {
   const phrase = props.phrase;
   const onChangePhrase = props.onChangePhrase;
   const startCall = async () => {
-    joinSession({phrase});
+    joinSession({ phrase });
   };
   return (
     <ImageBackground
       onLayout={onLayout}
-      source={{uri: $config.bg}}
+      source={{ uri: $config.bg }}
       style={style.full}
-      resizeMode={'cover'}>
+      resizeMode={'cover'}
+    >
       <View style={style.main}>
         <View style={style.nav}>
-
           <Logo />
           {error ? (
-
             <View
               style={{
                 position: 'absolute',
@@ -76,15 +75,16 @@ const Join = (props: joinProps) => {
                 top: '30%',
                 marginHorizontal: 'auto',
                 zIndex: 55,
-              }}>
-
-              <Text style={{alignSelf: 'center'}}>
+              }}
+            >
+              <Text style={{ alignSelf: 'center' }}>
                 <Text
                   style={{
                     fontWeight: '500',
                     textAlign: 'center',
                     fontSize: 16,
-                  }}>
+                  }}
+                >
                   {error.name + ' - '}
                 </Text>
                 <Text style={{}}>{error.message}</Text>
@@ -101,7 +101,7 @@ const Join = (props: joinProps) => {
             <Text style={style.headline}>{$config.landingSubHeading}</Text>
             <View style={style.inputs}>
               <TextInput
-                style={[style.textInput, {borderColor: primaryColor}]}
+                style={[style.textInput, { borderColor: primaryColor }]}
                 value={phrase}
                 onChangeText={(text) => onChangePhrase(text)}
                 onSubmitEditing={() => startCall()}
@@ -113,19 +113,21 @@ const Join = (props: joinProps) => {
                   phrase === ''
                     ? [
                         style.primaryBtnDisabled,
-                        {backgroundColor: primaryColor + '80'},
+                        { backgroundColor: primaryColor + '80' },
                       ]
-                    : [style.primaryBtn, {backgroundColor: primaryColor}]
+                    : [style.primaryBtn, { backgroundColor: primaryColor }]
                 }
                 disabled={phrase === ''}
-                onPress={() => startCall()}>
+                onPress={() => startCall()}
+              >
                 <Text style={style.primaryBtnText}>Enter</Text>
               </TouchableOpacity>
               <View style={style.ruler} />
               <TouchableOpacity
-                style={[style.secondaryBtn, {borderColor: primaryColor}]}
-                onPress={() => createMeeting()}>
-                <Text style={[style.secondaryBtnText, {color: primaryColor}]}>
+                style={[style.secondaryBtn, { borderColor: primaryColor }]}
+                onPress={() => createMeeting()}
+              >
+                <Text style={[style.secondaryBtnText, { color: primaryColor }]}>
                   Create a meeting
                 </Text>
               </TouchableOpacity>
@@ -151,8 +153,8 @@ const Join = (props: joinProps) => {
 };
 
 const style = StyleSheet.create({
-  full: {flex: 1},
-  illustration: {flex: 1, alignSelf: 'flex-end'},
+  full: { flex: 1 },
+  illustration: { flex: 1, alignSelf: 'flex-end' },
   main: {
     flex: 2,
     justifyContent: 'space-evenly',
@@ -164,7 +166,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  content: {flex: 6, flexDirection: 'row'},
+  content: { flex: 6, flexDirection: 'row' },
   leftContent: {
     width: '100%',
     flex: 1,

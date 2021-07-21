@@ -1,30 +1,31 @@
-import React, {useState, useContext} from 'react';
-import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import icons from '../assets/icons';
 import SelectDevice from '../subComponents/SelectDevice';
 import HostControlView from './HostControlView';
 import ColorContext from '../components/ColorContext';
 
 const Settings = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const [screenListActive, setScreenListActive] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const {isHost} = props;
+  const { isHost } = props;
 
   return (
     <>
       <TouchableOpacity
-        style={[style.localButton, {borderColor: primaryColor}]}
+        style={[style.localButton, { borderColor: primaryColor }]}
         disabled={buttonDisabled}
         onPress={() => {
           if (!screenListActive) {
             setScreenListActive(true);
             setButtonDisabled(true);
           }
-        }}>
+        }}
+      >
         <Image
-          source={{uri: icons.settings}}
-          style={[style.buttonIcon, {tintColor: primaryColor}]}
+          source={{ uri: icons.settings }}
+          style={[style.buttonIcon, { tintColor: primaryColor }]}
           resizeMode={'contain'}
         />
       </TouchableOpacity>
@@ -37,11 +38,12 @@ const Settings = (props: any) => {
             </View>
             {isHost ? <HostControlView /> : <></>}
             <TouchableOpacity
-              style={[style.primaryBtn, {backgroundColor: primaryColor}]}
+              style={[style.primaryBtn, { backgroundColor: primaryColor }]}
               onPress={() => {
                 setScreenListActive(false);
                 setButtonDisabled(false);
-              }}>
+              }}
+            >
               <Text style={style.primaryBtnText}>Done</Text>
             </TouchableOpacity>
           </View>
