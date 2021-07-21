@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   ScrollView,
@@ -13,19 +13,27 @@ import ChatContext from '../components/ChatContext';
 import icons from '../assets/icons';
 
 const ChatContainer = (props: any) => {
-  const {selectedUser, privateActive, setPrivateActive, selectedUsername} = props;
-  const {messageStore, localUid, privateMessageStore} = useContext(ChatContext);
+  const {
+    selectedUser,
+    privateActive,
+    setPrivateActive,
+    selectedUsername,
+  } = props;
+  const { messageStore, localUid, privateMessageStore } = useContext(
+    ChatContext,
+  );
   return (
     <View style={style.containerView}>
       {privateActive ? (
         <View style={style.row}>
           <TouchableOpacity
             style={style.backButton}
-            onPress={() => setPrivateActive(false)}>
+            onPress={() => setPrivateActive(false)}
+          >
             <Image
               resizeMode={'contain'}
               style={style.backIcon}
-              source={{uri: icons.backBtn}}
+              source={{ uri: icons.backBtn }}
             />
           </TouchableOpacity>
           <Text style={style.name}>{selectedUsername}</Text>
@@ -67,8 +75,8 @@ const ChatContainer = (props: any) => {
 };
 
 const style = StyleSheet.create({
-  containerView: {flex: 8},
-  row: {flexDirection: 'row', marginTop: 5},
+  containerView: { flex: 8 },
+  row: { flexDirection: 'row', marginTop: 5 },
   backButton: {
     marginLeft: 5,
     justifyContent: 'center',

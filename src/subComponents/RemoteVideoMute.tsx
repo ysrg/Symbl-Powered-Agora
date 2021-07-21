@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import {TouchableOpacity, Image, View, StyleSheet} from 'react-native';
-import ChatContext, {controlMessageEnum} from '../components/ChatContext';
+import React, { useContext } from 'react';
+import { TouchableOpacity, Image, View, StyleSheet } from 'react-native';
+import ChatContext, { controlMessageEnum } from '../components/ChatContext';
 import icons from '../assets/icons';
 import ColorContext from '../components/ColorContext';
 
@@ -9,24 +9,25 @@ const RemoteVideoMute = (props: {
   video: boolean;
   isHost: boolean;
 }) => {
-  const {primaryColor} = useContext(ColorContext);
-  const {sendControlMessageToUid} = useContext(ChatContext);
+  const { primaryColor } = useContext(ColorContext);
+  const { sendControlMessageToUid } = useContext(ChatContext);
   return props.isHost ? (
     <TouchableOpacity
       onPress={() => {
         sendControlMessageToUid(controlMessageEnum.muteVideo, props.uid);
-      }}>
+      }}
+    >
       <Image
-        style={[style.buttonIconCam, {tintColor: primaryColor}]}
-        source={{uri: props.video ? icons.videocam : icons.videocamOff}}
+        style={[style.buttonIconCam, { tintColor: primaryColor }]}
+        source={{ uri: props.video ? icons.videocam : icons.videocamOff }}
         resizeMode={'contain'}
       />
     </TouchableOpacity>
   ) : (
     <View>
       <Image
-        style={[style.buttonIconCam, {tintColor: primaryColor}]}
-        source={{uri: props.video ? icons.videocam : icons.videocamOff}}
+        style={[style.buttonIconCam, { tintColor: primaryColor }]}
+        source={{ uri: props.video ? icons.videocam : icons.videocamOff }}
         resizeMode={'contain'}
       />
     </View>

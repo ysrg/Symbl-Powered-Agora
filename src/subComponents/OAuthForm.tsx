@@ -1,9 +1,7 @@
 import React from 'react';
-import {Text, Button, TextInput} from "react-native";
+import { Text, Button, TextInput } from 'react-native';
 
 const Oauth = () => {
-    return <div>
-
-    </div>;
+  return <div />;
 };
 export default Oauth;

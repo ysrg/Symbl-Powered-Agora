@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import {Route, Redirect} from './Router';
+import React, { useContext } from 'react';
+import { Route, Redirect } from './Router';
 import StorageContext from './StorageContext';
 
-import type {RouteProps} from 'react-router';
+import type { RouteProps } from 'react-router';
 
 interface PrivateRouteProps extends RouteProps {
   failureRedirectTo: string;
@@ -10,7 +10,7 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
-  const {store} = useContext(StorageContext);
+  const { store } = useContext(StorageContext);
   return (
     <>
       {store.token === null ? (

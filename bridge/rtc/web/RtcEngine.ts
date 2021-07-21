@@ -20,7 +20,7 @@ import {SymblSocket} from '../web/symbl';
 import {Symbl} from '../web/symbl';
 //import {SendStream} from '../../../src/subComponents/SymblTranscript';
 //import {SendStream} from '../../../src/pages/VideoCall'
-import type { RtcEngineEvents, Subscription } from "react-native-agora/lib/RtcEvents";
+import type { RtcEngineEvents, Subscription } from 'react-native-agora/lib/RtcEvents';
 
 //
 // export interface StreamsInterface {
@@ -65,11 +65,11 @@ export default class RtcEngine {
     }
 
     constructor(appId: string) {
-        this.appId = appId
+        this.appId = appId;
         // this.AgoraRTC = AgoraRTC;
         this.client = AgoraRTC.createClient({
             codec: 'vp8',
-            mode: 'live'
+            mode: 'live',
         });
         this.screenClient = AgoraRTC.createClient({
             codec: 'vp8',
@@ -84,7 +84,7 @@ export default class RtcEngine {
             video: false,
             screen: true,
             screenAudio: true,
-        }
+        };
     }
     static async create(appId: string): Promise<RtcEngine> {
 
@@ -96,8 +96,8 @@ export default class RtcEngine {
             }, function (err) {
                 console.error(err);
                 reject();
-            })
-        }))
+            });
+        }));
         await init;
 
         return engine;
@@ -109,7 +109,7 @@ export default class RtcEngine {
             (this.streams.get(0)  as AgoraRTC.Stream).setVideoProfile('480p_9');
             (this.streams.get(0) as AgoraRTC.Stream).init(() => {
                 resolve();
-            },reject)
+            },reject);
         }));
         await enable;
     }
@@ -117,10 +117,10 @@ export default class RtcEngine {
     async joinChannel(token: string, channelName: string, optionalInfo: string, optionalUid: number): Promise<void> {
         let self = this;
         //code for symbl
-        let obj=await SendStream(channelName,optionalUid,optionalInfo);
-        this.symblSocket=obj.sS;
-        this.symbl=obj.symbl;
-        console.log("constructor name"+this.symblSocket.constructor.name)
+        let obj = await SendStream(channelName,optionalUid,optionalInfo);
+        this.symblSocket = obj.sS;
+        this.symbl = obj.symbl;
+        console.log('constructor name' + this.symblSocket.constructor.name);
 
         //
         let join = new Promise((resolve, reject) => {
@@ -139,13 +139,13 @@ export default class RtcEngine {
                 (this.eventsMap.get('UserJoined') as callbackType)(evt.stream.getId());
             });
             this.client.on('stream-removed', (evt) => {
-                console.log("triggered")
+                console.log('triggered');
                 this.removeStream(evt);
             });
             this.client.on('peer-leave', (evt) => {
-                console.log("triggered")
+                console.log('triggered');
                 this.removeStream(evt);
-            })
+            });
             this.client.on('stream-published', (evt) => {
                 (this.eventsMap.get('JoinChannelSuccess') as callbackType)();
             });
@@ -164,7 +164,7 @@ export default class RtcEngine {
             });
             this.client.join(token || null, channelName, optionalUid || null, (uid) => {
                 this.localUid = uid as number;
-                this.client.publish(this.streams.get(0) as AgoraRTC.Stream)
+                this.client.publish(this.streams.get(0) as AgoraRTC.Stream);
                 resolve();
             }, reject);
         });
@@ -184,56 +184,56 @@ export default class RtcEngine {
     addListener<EventType extends keyof RtcEngineEvents>(event: EventType, listener: RtcEngineEvents[EventType]): Subscription {
         if (
             event === 'UserJoined' ||
-            event === 'UserOffline' || 
+            event === 'UserOffline' ||
             event === 'JoinChannelSuccess' ||
             event === 'ScreenshareStopped' ||
             event === 'RemoteAudioStateChanged' ||
             event === 'RemoteVideoStateChanged'
         ) {
-            this.eventsMap.set(event, listener as callbackType)
+            this.eventsMap.set(event, listener as callbackType);
         }
         return {
             remove: () => {
-                console.log("Use destroy method to remove all the event listeners from the RtcEngine instead.")
-            }
-        }
+                console.log('Use destroy method to remove all the event listeners from the RtcEngine instead.');
+            },
+        };
     }
 
     async muteLocalAudioStream(muted: boolean): Promise<void> {
         try {
-            (this.streams.get(0) as AgoraRTC.Stream)[muted ? "muteAudio" : "unmuteAudio"]();
-            this.symblSocket.mute(muted); console.log("conversation Id RTC"+this.symblSocket._conversationId+muted+JSON.stringify(this.symblSocket));
+            (this.streams.get(0) as AgoraRTC.Stream)[muted ? 'muteAudio' : 'unmuteAudio']();
+            this.symblSocket.mute(muted); console.log('conversation Id RTC' + this.symblSocket._conversationId + muted + JSON.stringify(this.symblSocket));
 
         }
         catch (e) {
-            console.error(e, "\n Be sure to invoke the enableVideo method before using this method.")
+            console.error(e, '\n Be sure to invoke the enableVideo method before using this method.');
         }
     }
 
     async muteLocalVideoStream(muted: boolean): Promise<void> {
         try {
-            (this.streams.get(0) as AgoraRTC.Stream)[muted ? "muteVideo" : "unmuteVideo"]();
+            (this.streams.get(0) as AgoraRTC.Stream)[muted ? 'muteVideo' : 'unmuteVideo']();
         }
         catch (e) {
-            console.error(e, "\n Be sure to invoke the enableVideo method before using this method.")
+            console.error(e, '\n Be sure to invoke the enableVideo method before using this method.');
         }
     }
 
     async muteRemoteAudioStream(uid: number, muted: boolean): Promise<void> {
         try {
-            (this.streams.get(uid) as AgoraRTC.Stream)[muted ? "muteAudio" : "unmuteAudio"]();
+            (this.streams.get(uid) as AgoraRTC.Stream)[muted ? 'muteAudio' : 'unmuteAudio']();
         }
         catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 
     async muteRemoteVideoStream(uid: number, muted: boolean): Promise<void> {
         try {
-            (this.streams.get(uid) as AgoraRTC.Stream)[muted ? "muteVideo" : "unmuteVideo"]();
+            (this.streams.get(uid) as AgoraRTC.Stream)[muted ? 'muteVideo' : 'unmuteVideo']();
         }
         catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 
@@ -295,7 +295,7 @@ export default class RtcEngine {
         }
         this.symbl.stop();
         this.symblSocket.stopRequest();
-        console.log(await this.symblSocket.close()+"trying to close symbl socket");
+        console.log(await this.symblSocket.close() + 'trying to close symbl socket');
 
 
 

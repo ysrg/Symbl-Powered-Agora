@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
 const useMount = (effect: () => (() => void) | void) => {
   useEffect(effect, []);

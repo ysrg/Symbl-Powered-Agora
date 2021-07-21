@@ -1,13 +1,13 @@
-import React, {useContext} from 'react';
-import RtcContext, {DispatchType} from '../../agora-rn-uikit/src/RtcContext';
-import {LocalContext} from '../../agora-rn-uikit/src/LocalUserContext';
-import {Image, TouchableOpacity} from 'react-native';
+import React, { useContext } from 'react';
+import RtcContext, { DispatchType } from '../../agora-rn-uikit/src/RtcContext';
+import { LocalContext } from '../../agora-rn-uikit/src/LocalUserContext';
+import { Image, TouchableOpacity } from 'react-native';
 import icons from '../assets/icons';
 import ColorContext from '../components/ColorContext';
 
 function LocalAudioMute() {
-  const {primaryColor} = useContext(ColorContext);
-  const {dispatch} = useContext(RtcContext);
+  const { primaryColor } = useContext(ColorContext);
+  const { dispatch } = useContext(RtcContext);
   const local = useContext(LocalContext);
 
   return (
@@ -17,7 +17,8 @@ function LocalAudioMute() {
           type: 'LocalMuteAudio',
           value: [local.audio],
         });
-      }}>
+      }}
+    >
       <Image
         style={[
           {
@@ -25,9 +26,9 @@ function LocalAudioMute() {
             height: 24,
             tintColor: '#099DFD',
           },
-          {tintColor: primaryColor},
+          { tintColor: primaryColor },
         ]}
-        source={{uri: local.audio ? icons.mic : icons.micOff}}
+        source={{ uri: local.audio ? icons.mic : icons.micOff }}
       />
     </TouchableOpacity>
   );

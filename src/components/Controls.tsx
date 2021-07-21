@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Image,
@@ -16,14 +16,13 @@ import Recording from '../subComponents/Recording';
 import icons from '../assets/icons';
 import ScreenshareButton from '../subComponents/ScreenshareButton';
 import ColorContext from '../components/ColorContext';
-import SymblTranscript from "../subComponents/SymblButton";
-import SymblButton from "../subComponents/SymblButton";
-import SymblTopictooltip from "../subComponents/SymblTopicTooltip";
-import {Button, Grid, Tooltip} from "@material-ui/core";
-
+import SymblTranscript from '../subComponents/SymblButton';
+import SymblButton from '../subComponents/SymblButton';
+import SymblTopictooltip from '../subComponents/SymblTopicTooltip';
+import { Button, Grid, Tooltip } from '@material-ui/core';
 
 const Controls = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const [screenshareActive, setScreenshareActive] = useState(false);
   const {
     setRecordingActive,
@@ -38,22 +37,19 @@ const Controls = (props: any) => {
     <LocalUserContext>
       <View style={style.controlsHolder}>
         <TouchableOpacity
-
-            style={[style.localButton, {borderColor: primaryColor}]}
-            onPress={() => {
-              if(document.getElementById("tes").style.visibility=='hidden')
-              document.getElementById("tes").style.visibility= 'visible';
-              else{
-                document.getElementById("tes").style.visibility= 'hidden';
-              }
-            }}>
-
+          style={[style.localButton, { borderColor: primaryColor }]}
+          onPress={() => {
+            if (document.getElementById('tes').style.visibility == 'hidden') {
+              document.getElementById('tes').style.visibility = 'visible';
+            } else {
+              document.getElementById('tes').style.visibility = 'hidden';
+            }
+          }}
+        >
           <Image
-
-              source={{uri: icons.closedCaption}}
-              style={[style.buttonIcon, {tintColor:""}]}
+            source={{ uri: icons.closedCaption }}
+            style={[style.buttonIcon, { tintColor: '' }]}
           />
-
         </TouchableOpacity>
         <LocalAudioMute />
 
@@ -80,53 +76,48 @@ const Controls = (props: any) => {
         )}
         {$config.chat ? (
           <TouchableOpacity
-            style={[style.localButton, {borderColor: primaryColor}]}
+            style={[style.localButton, { borderColor: primaryColor }]}
             onPress={() => {
               setChatDisplayed(!chatDisplayed);
-            }}>
+            }}
+          >
             <Image
-              source={{uri: icons.chatIcon}}
-              style={[style.buttonIcon, {tintColor: primaryColor}]}
+              source={{ uri: icons.chatIcon }}
+              style={[style.buttonIcon, { tintColor: primaryColor }]}
             />
           </TouchableOpacity>
         ) : (
           <></>
         )}
-        { $config.chat ? (
-            <TouchableOpacity
-                style={[style.localButton, {borderColor: primaryColor}]}
-                onPress={() => {
-                  setTranscriptDisplayed(!transcriptDisplayed);
-                }}>
-              <Image
-                  source={{uri: icons.symblIcon}}
-                  style={[style.buttonIcon, {tintColor: primaryColor}]}
-              />
-            </TouchableOpacity>
-
+        {$config.chat ? (
+          <TouchableOpacity
+            style={[style.localButton, { borderColor: primaryColor }]}
+            onPress={() => {
+              setTranscriptDisplayed(!transcriptDisplayed);
+            }}
+          >
+            <Image
+              source={{ uri: icons.symblIcon }}
+              style={[style.buttonIcon, { tintColor: primaryColor }]}
+            />
+          </TouchableOpacity>
         ) : (
-            <></>
+          <></>
         )}
 
         <Endcall />
 
         <TouchableOpacity
-
-            style={[style.localButton, {borderColor: primaryColor}]}
-            onPress={() => {
-              window.open(window.localStorage.getItem("summaryUrl"));
-            }}>
-
+          style={[style.localButton, { borderColor: primaryColor }]}
+          onPress={() => {
+            window.open(window.localStorage.getItem('summaryUrl'));
+          }}
+        >
           <Image
-
-              source={{uri: icons.summaryButton}}
-              style={[style.buttonIcon, {tintColor:primaryColor}]}
+            source={{ uri: icons.summaryButton }}
+            style={[style.buttonIcon, { tintColor: primaryColor }]}
           />
-
         </TouchableOpacity>
-
-
-
       </View>
     </LocalUserContext>
   );

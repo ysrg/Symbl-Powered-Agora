@@ -56,7 +56,7 @@ export default class RtcEngine {
       window.engine = engine.agoraRtcEngine;
       resolve();
     });
-    console.log("create invoked", engine);
+    console.log('create invoked', engine);
     await init;
     engine.agoraRtcEngine.startPreview();
     return engine;
@@ -67,7 +67,7 @@ export default class RtcEngine {
       this.agoraRtcEngine.enableVideo() === 0 ? resolve() : reject();
     });
     await enable;
-    console.log("enabled video")
+    console.log('enabled video');
   }
 
   async joinChannel(
@@ -92,7 +92,7 @@ export default class RtcEngine {
         (this.eventsMap.get('RemoteVideoStateChanged') as callbackType)([uid, state, reason, elapsed]);
       });
       this.agoraRtcEngine.on('joinedChannel', (channel, uid, elapsed) => {
-        if(this.eventsMap.get('JoinChannelSuccess')){
+        if (this.eventsMap.get('JoinChannelSuccess')){
           (this.eventsMap.get(
             'JoinChannelSuccess',
           ) as UidWithElapsedCallbackType)(channel, uid, elapsed);
@@ -125,7 +125,7 @@ export default class RtcEngine {
   ): Subscription {
     if (
       event === 'UserJoined' ||
-      event === 'UserOffline' || 
+      event === 'UserOffline' ||
       event === 'JoinChannelSuccess' ||
       event === 'ScreenshareStopped' ||
       event === 'RemoteAudioStateChanged' ||
@@ -179,10 +179,10 @@ export default class RtcEngine {
   }
 
   getDevices(callback: (devices: any) => void): void {
-    let vdevices = this.agoraRtcEngine.getVideoDevices()
-    vdevices = vdevices.map( d => ({ kind:'videoinput', deviceId:d.deviceid, label:d.devicename}))
-    let adevices = this.agoraRtcEngine.getAudioRecordingDevices()
-    adevices = adevices.map( d => ({kind:'audioinput', deviceId:d.deviceid, label:d.devicename}))
+    let vdevices = this.agoraRtcEngine.getVideoDevices();
+    vdevices = vdevices.map( d => ({ kind:'videoinput', deviceId:d.deviceid, label:d.devicename}));
+    let adevices = this.agoraRtcEngine.getAudioRecordingDevices();
+    adevices = adevices.map( d => ({kind:'audioinput', deviceId:d.deviceid, label:d.devicename}));
     let devices = [...adevices, ...vdevices];
     callback(devices);
   }

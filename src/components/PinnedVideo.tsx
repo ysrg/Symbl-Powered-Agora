@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ScrollView,
   TouchableOpacity,
@@ -8,13 +8,13 @@ import {
   Platform,
   Text,
 } from 'react-native';
-import {MinUidConsumer} from '../../agora-rn-uikit/src/MinUidContext';
+import { MinUidConsumer } from '../../agora-rn-uikit/src/MinUidContext';
 import RtcContext from '../../agora-rn-uikit/src/RtcContext';
-import {MaxVideoView} from '../../agora-rn-uikit/Components';
-import {MaxUidConsumer} from '../../agora-rn-uikit/src/MaxUidContext';
+import { MaxVideoView } from '../../agora-rn-uikit/Components';
+import { MaxUidConsumer } from '../../agora-rn-uikit/src/MaxUidContext';
 import chatContext from '../components/ChatContext';
-import Transcript from "./transcript";
-import SymblTopictooltip from "../subComponents/SymblTopicTooltip";
+import Transcript from './transcript';
+import SymblTopictooltip from '../subComponents/SymblTopicTooltip';
 
 const PinnedVideo = () => {
   const [dim, setDim] = useState([
@@ -22,19 +22,19 @@ const PinnedVideo = () => {
     Dimensions.get('window').height,
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
-  let onLayout = () => {
+  const onLayout = () => {
     setTimeout(() => {
-      let {height, width} = Dimensions.get('window');
-      let isLandscape = width > height;
+      const { height, width } = Dimensions.get('window');
+      const isLandscape = width > height;
       setDim([width, height, isLandscape]);
     }, 20);
   };
-  const {userList, localUid} = useContext(chatContext);
+  const { userList, localUid } = useContext(chatContext);
   return (
     <View
-      style={{flexDirection: dim[2] ? 'row' : 'column', flex: 1}}
-      onLayout={onLayout}>
-
+      style={{ flexDirection: dim[2] ? 'row' : 'column', flex: 1 }}
+      onLayout={onLayout}
+    >
       <View
         style={
           dim[2]
@@ -42,14 +42,13 @@ const PinnedVideo = () => {
             : Platform.OS === 'web'
             ? style.flex2
             : style.flex4
-        }>
-
+        }
+      >
         <MaxUidConsumer>
           {(maxUsers) => (
             <View style={style.flex1}>
               <MaxVideoView user={maxUsers[0]} key={maxUsers[0].uid} />
               <View style={style.nameHolder}>
-
                 <Text style={style.name}>
                   {maxUsers[0].uid === 'local'
                     ? userList[localUid]
@@ -59,8 +58,6 @@ const PinnedVideo = () => {
                     ? userList[maxUsers[0].uid].name + ' '
                     : 'User '}
                 </Text>
-
-
               </View>
             </View>
           )}
@@ -73,7 +70,10 @@ const PinnedVideo = () => {
         //   dim[2] ? dim[0] * 0.1125 + 2 : ((dim[1] / 3.6) * 16) / 9
         // }
         // snapToAlignment={'center'}
-        style={dim[2] ? {marginTop: dim[1] * 0.08, width: '20%'} : {flex: 1}}>
+        style={
+          dim[2] ? { marginTop: dim[1] * 0.08, width: '20%' } : { flex: 1 }
+        }
+      >
         <RtcContext.Consumer>
           {(data) => (
             <MinUidConsumer>
@@ -101,8 +101,9 @@ const PinnedVideo = () => {
                     }
                     key={user.uid}
                     onPress={() => {
-                      data.dispatch({type: 'SwapVideo', value: [user]});
-                    }}>
+                      data.dispatch({ type: 'SwapVideo', value: [user] });
+                    }}
+                  >
                     <View style={style.flex1}>
                       <MaxVideoView
                         user={user}
@@ -127,18 +128,16 @@ const PinnedVideo = () => {
             </MinUidConsumer>
           )}
         </RtcContext.Consumer>
-
       </ScrollView>
-
     </View>
   );
 };
 
 const style = StyleSheet.create({
-  width80: {width: '80%'},
-  flex2: {flex: 2},
-  flex4: {flex: 4},
-  flex1: {flex: 1},
+  width80: { width: '80%' },
+  flex2: { flex: 2 },
+  flex4: { flex: 4 },
+  flex1: { flex: 1 },
   nameHolder: {
     marginTop: -25,
     backgroundColor: '#ffffffbb',
@@ -146,8 +145,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 8,
     height: 25,
   },
-  name: {color: '#333', lineHeight: 25, fontWeight: '700'},
-
+  name: { color: '#333', lineHeight: 25, fontWeight: '700' },
 });
 
 export default PinnedVideo;

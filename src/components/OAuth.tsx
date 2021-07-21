@@ -1,5 +1,5 @@
 import React from 'react';
-import {Linking} from 'react-native';
+import { Linking } from 'react-native';
 
 const oauth = {
   client_id: $config.CLIENT_ID,

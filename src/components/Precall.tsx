@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -8,35 +8,39 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import {MaxUidConsumer} from '../../agora-rn-uikit/src/MaxUidContext';
-import {MaxVideoView} from '../../agora-rn-uikit/Components';
-import {LocalAudioMute, LocalVideoMute} from '../../agora-rn-uikit/Components';
+import { MaxUidConsumer } from '../../agora-rn-uikit/src/MaxUidContext';
+import { MaxVideoView } from '../../agora-rn-uikit/Components';
+import {
+  LocalAudioMute,
+  LocalVideoMute,
+} from '../../agora-rn-uikit/Components';
 import LocalUserContext from '../../agora-rn-uikit/src/LocalUserContext';
 import SelectDevice from '../subComponents/SelectDevice';
 import Logo from '../subComponents/Logo';
 import OpenInNativeButton from '../subComponents/OpenInNativeButton';
 import ColorContext from '../components/ColorContext';
-import {useHistory} from './Router';
+import { useHistory } from './Router';
 
 const Precall = (props: any) => {
   const history = useHistory();
-  const {primaryColor} = useContext(ColorContext);
-  const {setCallActive, queryComplete, username, setUsername, error} = props;
+  const { primaryColor } = useContext(ColorContext);
+  const { setCallActive, queryComplete, username, setUsername, error } = props;
   const [dim, setDim] = useState([
     Dimensions.get('window').width,
     Dimensions.get('window').height,
     Dimensions.get('window').width > Dimensions.get('window').height,
   ]);
-  let onLayout = (e: any) => {
+  const onLayout = (e: any) => {
     setDim([e.nativeEvent.layout.width, e.nativeEvent.layout.height]);
   };
 
   return (
     <ImageBackground
       onLayout={onLayout}
-      source={{uri: $config.bg}}
+      source={{ uri: $config.bg }}
       style={style.full}
-      resizeMode={'cover'}>
+      resizeMode={'cover'}
+    >
       <View style={style.main}>
         <View style={style.nav}>
           <Logo />
@@ -56,27 +60,31 @@ const Precall = (props: any) => {
                 top: '30%',
                 marginHorizontal: 'auto',
                 zIndex: 55,
-              }}>
-              <Text style={{alignSelf: 'center'}}>
+              }}
+            >
+              <Text style={{ alignSelf: 'center' }}>
                 <Text
                   style={{
                     fontWeight: '500',
                     textAlign: 'center',
                     fontSize: 16,
-                  }}>
+                  }}
+                >
                   {error.name + ' - '}
                 </Text>
                 <Text style={{}}>{error.message}</Text>
               </Text>
               <TouchableOpacity
-                style={{alignSelf: 'center'}}
-                onPress={() => history.replace('./')}>
+                style={{ alignSelf: 'center' }}
+                onPress={() => history.replace('./')}
+              >
                 <Text
                   style={{
                     fontWeight: '500',
                     textAlign: 'center',
                     textDecorationLine: 'underline',
-                  }}>
+                  }}
+                >
                   Go back
                 </Text>
               </TouchableOpacity>
@@ -96,13 +104,12 @@ const Precall = (props: any) => {
             <View style={style.precallControls}>
               <LocalUserContext>
                 <LocalVideoMute />
-
               </LocalUserContext>
             </View>
             {dim[0] < dim[1] + 150 ? (
               <View style={style.margin5Btm}>
                 <TextInput
-                  style={[style.textInput, {borderColor: primaryColor}]}
+                  style={[style.textInput, { borderColor: primaryColor }]}
                   value={username}
                   onChangeText={(text) => {
                     if (username !== 'Getting name...') {
@@ -119,12 +126,13 @@ const Precall = (props: any) => {
                   disabled={!queryComplete}
                   style={
                     queryComplete
-                      ? [style.primaryBtn, {backgroundColor: primaryColor}]
+                      ? [style.primaryBtn, { backgroundColor: primaryColor }]
                       : [
                           style.primaryBtnDisabled,
-                          {backgroundColor: primaryColor + '80'},
+                          { backgroundColor: primaryColor + '80' },
                         ]
-                  }>
+                  }
+                >
                   <Text style={style.primaryBtnText}>
                     {queryComplete ? 'Join Room' : 'Loading...'}
                   </Text>
@@ -136,11 +144,13 @@ const Precall = (props: any) => {
           </View>
           {dim[0] >= dim[1] + 150 ? (
             <View style={style.full}>
-              <View style={[style.precallPickers, {shadowColor: primaryColor}]}>
+              <View
+                style={[style.precallPickers, { shadowColor: primaryColor }]}
+              >
                 <Text style={style.subHeading}>Select Input Device</Text>
                 <SelectDevice />
                 <TextInput
-                  style={[style.textInput, {borderColor: primaryColor}]}
+                  style={[style.textInput, { borderColor: primaryColor }]}
                   value={username}
                   onChangeText={(text) => {
                     if (username !== 'Getting name...') {
@@ -153,16 +163,18 @@ const Precall = (props: any) => {
                 />
                 <TouchableOpacity
                   onPress={() => setCallActive(true)}
-                  disabled={!queryComplete}>
+                  disabled={!queryComplete}
+                >
                   <View
                     style={
                       queryComplete
-                        ? [style.primaryBtn, {backgroundColor: primaryColor}]
+                        ? [style.primaryBtn, { backgroundColor: primaryColor }]
                         : [
                             style.primaryBtnDisabled,
-                            {backgroundColor: primaryColor + '80'},
+                            { backgroundColor: primaryColor + '80' },
                           ]
-                    }>
+                    }
+                  >
                     <Text style={style.primaryBtnText}>
                       {queryComplete ? 'Join Room' : 'Loading...'}
                     </Text>
@@ -180,7 +192,7 @@ const Precall = (props: any) => {
 };
 
 const style = StyleSheet.create({
-  full: {flex: 1},
+  full: { flex: 1 },
   main: {
     flex: 2,
     justifyContent: 'space-evenly',
@@ -192,7 +204,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  content: {flex: 6, flexDirection: 'row'},
+  content: { flex: 6, flexDirection: 'row' },
   leftContent: {
     width: '100%',
     flex: 1.3,
@@ -286,7 +298,7 @@ const style = StyleSheet.create({
     shadowRadius: 5,
     borderRadius: 5,
   },
-  margin5Btm: {marginBottom: '5%'},
+  margin5Btm: { marginBottom: '5%' },
 });
 
 export default Precall;

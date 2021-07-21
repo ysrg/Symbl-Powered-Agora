@@ -1,23 +1,22 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Join from './pages/Join';
 import VideoCall from './pages/VideoCall';
 import Create from './pages/Create';
-import {Router, Route, Switch, Redirect} from './components/Router';
+import { Router, Route, Switch, Redirect } from './components/Router';
 import PrivateRoute from './components/PrivateRoute';
 import OAuth from './components/OAuth';
 import Navigation from './components/Navigation';
 import StoreToken from './components/StoreToken';
-import {StorageProvider} from './components/StorageContext';
+import { StorageProvider } from './components/StorageContext';
 import GraphQLProvider from './components/GraphQLProvider';
 // import JoinPhrase from './components/JoinPhrase';
-import {SessionProvider} from './components/SessionContext';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import { SessionProvider } from './components/SessionContext';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import ColorConfigure from './components/ColorConfigure';
-import Transcript from "./components/transcript";
-import {SendStream}  from "../bridge/rtc/web/SendStream";
-import SymblTopics from "./subComponents/SymblTopics";
-import SymblTopicTagCloud from "./components/SymblTopicCloud/SymblTopicTagCloud";
-
+import Transcript from './components/transcript';
+import { SendStream } from '../bridge/rtc/web/SendStream';
+import SymblTopics from './subComponents/SymblTopics';
+import SymblTopicTagCloud from './components/SymblTopicCloud/SymblTopicTagCloud';
 
 const App: React.FC = () => {
   const [phrase, onChangePhrase] = useState('');
@@ -25,7 +24,7 @@ const App: React.FC = () => {
   // @ts-ignore
   // @ts-ignore
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar hidden={true} />
       <StorageProvider>
         <GraphQLProvider>
@@ -52,7 +51,8 @@ const App: React.FC = () => {
                   {$config.ENABLE_OAUTH ? (
                     <PrivateRoute
                       path={'/create'}
-                      failureRedirectTo={'/authenticate'}>
+                      failureRedirectTo={'/authenticate'}
+                    >
                       <Create />
                     </PrivateRoute>
                   ) : (
@@ -60,7 +60,7 @@ const App: React.FC = () => {
                       <Create />
                     </Route>
                   )}
-                  <Route path={'/:phrase/:token'}>
+                  <Route path={'/:phrase'}>
                     <VideoCall />
                   </Route>
                 </Switch>
@@ -69,7 +69,6 @@ const App: React.FC = () => {
           </Router>
         </GraphQLProvider>
       </StorageProvider>
-
     </SafeAreaView>
   );
   // return <div> hello world</div>; {/* isn't join:phrase redundant now, also can we remove joinStore */}

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 
 const Illustration = () => {
   return (
     <Image
-      style={{flex: 1}}
+      style={{ flex: 1 }}
       resizeMode={'contain'}
       source={{
         uri:

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import RtcContext from '../../agora-rn-uikit/src/RtcContext';
 import DeviceContext from './DeviceContext';
 
@@ -59,7 +59,8 @@ const DeviceConfigure: React.FC = (props: any) => {
         setSelectedMic,
         deviceList,
         setDeviceList,
-      }}>
+      }}
+    >
       {true ? props.children : <></>}
     </DeviceContext.Provider>
   );

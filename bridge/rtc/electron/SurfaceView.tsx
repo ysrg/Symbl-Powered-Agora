@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
-import {StyleProp, StyleSheet, ViewProps, ViewStyle} from 'react-native';
-import {VideoMirrorMode, VideoRenderMode} from 'react-native-agora/lib/Types';
+import React, { useEffect, useRef } from 'react';
+import { StyleProp, StyleSheet, ViewProps, ViewStyle } from 'react-native';
+import { VideoMirrorMode, VideoRenderMode } from 'react-native-agora/lib/Types';
 import type AgoraRtcEngine from 'agora-electron-sdk';
 
 export interface RtcSurfaceViewProps extends ViewProps {
@@ -59,7 +59,7 @@ const SurfaceView = (props: SurfaceViewInterface) => {
       id={String(props.uid) + '-player'}
       ref={canvasElem}
       className={'video-container'}
-      style={{flex: 1, ...(props.style as Object)}}
+      style={{ flex: 1, ...(props.style as Object) }}
     />
   );
 };

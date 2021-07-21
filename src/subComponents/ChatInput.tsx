@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TextInput,
@@ -10,12 +10,12 @@ import ChatContext from '../components/ChatContext';
 import ColorContext from '../components/ColorContext';
 
 const ChatInput = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const [message, onChangeMessage] = useState('');
-  const {privateActive, selectedUser} = props;
-  const {sendMessage, sendMessageToUid} = useContext(ChatContext);
+  const { privateActive, selectedUser } = props;
+  const { sendMessage, sendMessageToUid } = useContext(ChatContext);
   return (
-    <View style={[style.inputView, {borderColor: primaryColor}]}>
+    <View style={[style.inputView, { borderColor: primaryColor }]}>
       <TextInput
         style={style.chatInput}
         value={message}
@@ -37,7 +37,8 @@ const ChatInput = (props: any) => {
             ? (sendMessage(message), onChangeMessage(''))
             : (sendMessageToUid(message, selectedUser.uid),
               onChangeMessage(''));
-        }}>
+        }}
+      >
         <Text style={style.chatInputButtonText}>
           {!privateActive ? 'G' : 'P'}
         </Text>

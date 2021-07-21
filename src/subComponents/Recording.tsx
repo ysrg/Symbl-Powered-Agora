@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
-import {Image, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useContext } from 'react';
+import { Image, TouchableOpacity, StyleSheet } from 'react-native';
 import icons from '../assets/icons';
-import ChatContext, {controlMessageEnum} from '../components/ChatContext';
+import ChatContext, { controlMessageEnum } from '../components/ChatContext';
 import ColorContext from '../components/ColorContext';
-import {gql, useMutation} from '@apollo/client';
-import {useParams} from '../components/Router';
+import { gql, useMutation } from '@apollo/client';
+import { useParams } from '../components/Router';
 import PropsContext from '../../agora-rn-uikit/src/PropsContext';
 
 const START_RECORDING = gql`
@@ -20,17 +20,17 @@ const STOP_RECORDING = gql`
 `;
 
 const Recording = (props: any) => {
-  const {rtcProps} = useContext(PropsContext);
-  const {primaryColor} = useContext(ColorContext);
+  const { rtcProps } = useContext(PropsContext);
+  const { primaryColor } = useContext(ColorContext);
   const setRecordingActive = props.setRecordingActive;
   const recordingActive = props.recordingActive;
-  const {phrase} = useParams();
+  const { phrase } = useParams();
   const [startRecordingQuery] = useMutation(START_RECORDING);
   const [stopRecordingQuery] = useMutation(STOP_RECORDING);
-  const {sendControlMessage} = useContext(ChatContext);
+  const { sendControlMessage } = useContext(ChatContext);
   return (
     <TouchableOpacity
-      style={[style.localButton, {borderColor: primaryColor}]}
+      style={[style.localButton, { borderColor: primaryColor }]}
       onPress={() => {
         if (!recordingActive) {
           startRecordingQuery({
@@ -53,7 +53,7 @@ const Recording = (props: any) => {
               console.log(err);
             });
         } else {
-          stopRecordingQuery({variables: {passphrase: phrase}})
+          stopRecordingQuery({ variables: { passphrase: phrase } })
             .then((res) => {
               console.log(res.data);
               if (res.data.stopRecordingSession === 'success') {
@@ -65,14 +65,15 @@ const Recording = (props: any) => {
               console.log(err);
             });
         }
-      }}>
+      }}
+    >
       <Image
         source={{
           uri: recordingActive
             ? icons.recordingActiveIcon
             : icons.recordingIcon,
         }}
-        style={[style.buttonIcon, {tintColor: primaryColor}]}
+        style={[style.buttonIcon, { tintColor: primaryColor }]}
         resizeMode={'contain'}
       />
     </TouchableOpacity>

@@ -31,7 +31,7 @@ const styles = {
     fontSize: 16,
     padding: 2,
   },
-  message: {padding: 2, fontSize: 14, fontFamily: 'Helvetica'},
+  message: { padding: 2, fontSize: 14, fontFamily: 'Helvetica' },
   date: {
     textAlign: 'right',
     fontWeight: 200,

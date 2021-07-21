@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Image,
   TouchableOpacity,
@@ -12,13 +12,13 @@ import RtcContext from '../../agora-rn-uikit/src/RtcContext';
 import ColorContext from '../components/ColorContext';
 
 const ScreenshareButton = (props: any) => {
-  const {primaryColor} = useContext(ColorContext);
+  const { primaryColor } = useContext(ColorContext);
   const [screenListActive, setScreenListActive] = useState(false);
   const [selectedScreen, setSelectedScreen] = useState(0);
   const [screens, setScreens] = useState([]);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const rtc = useContext(RtcContext);
-  const {screenshareActive, setScreenshareActive} = props;
+  const { screenshareActive, setScreenshareActive } = props;
   rtc.RtcEngine.addListener('ScreenshareStopped', () => {
     setScreenshareActive(false);
   });
@@ -28,7 +28,7 @@ const ScreenshareButton = (props: any) => {
         style={
           screenshareActive
             ? style.greenLocalButton
-            : [style.localButton, {borderColor: primaryColor}]
+            : [style.localButton, { borderColor: primaryColor }]
         }
         disabled={buttonDisabled}
         onPress={() => {
@@ -40,10 +40,11 @@ const ScreenshareButton = (props: any) => {
           } else {
             rtc.RtcEngine.startScreenshare();
           }
-        }}>
+        }}
+      >
         <Image
-          source={{uri: icons.screenshareIcon}}
-          style={[style.buttonIcon, {tintColor: primaryColor}]}
+          source={{ uri: icons.screenshareIcon }}
+          style={[style.buttonIcon, { tintColor: primaryColor }]}
         />
       </TouchableOpacity>
       {screenListActive ? (
@@ -52,7 +53,8 @@ const ScreenshareButton = (props: any) => {
           <Picker
             selectedValue={selectedScreen}
             style={style.popupPicker}
-            onValueChange={(itemValue) => setSelectedScreen(itemValue)}>
+            onValueChange={(itemValue) => setSelectedScreen(itemValue)}
+          >
             {screens.map((device: any, i) => {
               console.log(device, i);
               return (
@@ -67,7 +69,8 @@ const ScreenshareButton = (props: any) => {
               setScreenshareActive(true);
               setButtonDisabled(false);
             }}
-            style={style.popupButton}>
+            style={style.popupButton}
+          >
             <Text style={style.buttonText}>Start Sharing</Text>
           </TouchableOpacity>
         </View>

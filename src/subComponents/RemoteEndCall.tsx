@@ -1,20 +1,22 @@
-import React, {useContext} from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
-import ChatContext, {controlMessageEnum} from '../components/ChatContext';
+import React, { useContext } from 'react';
+import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import ChatContext, { controlMessageEnum } from '../components/ChatContext';
 import icons from '../assets/icons';
 
-const RemoteEndCall = (props: {uid: number; isHost: boolean}) => {
-  const {sendControlMessageToUid} = useContext(ChatContext);
+const RemoteEndCall = (props: { uid: number; isHost: boolean }) => {
+  const { sendControlMessageToUid } = useContext(ChatContext);
   return props.isHost ? (
     <TouchableOpacity
       style={style.remoteButton}
       onPress={() => {
         sendControlMessageToUid(controlMessageEnum.kickUser, props.uid);
-      }}>
+      }}
+    >
       <Image
         style={style.buttonIconEnd}
-        source={{uri: icons.endCall}}
-        resizeMode={'contain'}/>
+        source={{ uri: icons.endCall }}
+        resizeMode={'contain'}
+      />
     </TouchableOpacity>
   ) : (
     <></>
