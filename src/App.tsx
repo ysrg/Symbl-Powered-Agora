@@ -60,7 +60,7 @@ const App: React.FC = () => {
                       <Create />
                     </Route>
                   )}
-                  <Route path={'/:phrase/:token'}>
+                  <Route path={'/:phrase'}>
                     <VideoCall />
                   </Route>
                 </Switch>

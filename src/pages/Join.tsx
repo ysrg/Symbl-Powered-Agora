@@ -56,7 +56,6 @@ const Join = (props: joinProps) => {
       style={style.full}
       resizeMode={'cover'}>
       <View style={style.main}>
-        <SymblCredentialOptions open={symblCredOpen} onClose={handleSymblClose}></SymblCredentialOptions>
         <View style={style.nav}>
 
           <Logo />

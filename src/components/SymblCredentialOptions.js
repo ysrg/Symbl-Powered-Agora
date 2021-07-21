@@ -110,8 +110,12 @@ const getAccessToken = async ({appId, appSecret}) => {
 
 export default function CredentialsOptions(props) {
 
-    const[appId,setAppID]=useState("");
-    const[appSecret,setAppSecret]=useState("");
+     const [appId, setAppID] = useState(
+      '616a5274375031386537474d6d6868573872326b4b66433569644c4f6e38524c',
+    );
+    const [appSecret, setAppSecret] = useState(
+      '3731655f6f585757565470314e4f304f78306c4d7341315673523074746444343255464334454e614b76437a6f6c696c4876706a6c757a507a56396e76717378',
+    );
     const [credentialsValid, setCredentialsValid] = useState(null);
     const [dialogOpen, setDialogOpen]=useState(true);
     const { onClose, open } = props;

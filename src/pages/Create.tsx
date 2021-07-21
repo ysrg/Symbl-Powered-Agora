@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Checkbox from '../subComponents/Checkbox';
-import {gql, useMutation} from '@apollo/client';
+import {gql, useMutation, useQuery} from '@apollo/client';
 import Logo from '../subComponents/Logo';
 import OpenInNativeButton from '../subComponents/OpenInNativeButton';
 import Share from '../components/Share';
@@ -40,6 +40,16 @@ const CREATE_CHANNEL = gql`
     }
   }
 `;
+const SYMBL_RESPONSE = gql`
+  query SymblResponse($passphrase: String!) {
+    symblResponse(passphrase: $passphrase) {
+      SymblToken
+      SymblExpires
+      Title
+      Channel
+    }
+  }
+`;
 
 
 const Create = () => {
@@ -58,13 +68,7 @@ const Create = () => {
   const handleSymblClose = (value) => {
     setSymblCredOpen(false);
   };
-
-  console.log('mutation data', data);
-
   const createRoom = () => {
-
-
-
     if (roomTitle !== '') {
       console.log('Create room invoked');
       createChannel({

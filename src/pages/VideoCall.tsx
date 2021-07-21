@@ -34,6 +34,8 @@ const JOIN_CHANNEL_PHRASE_AND_GET_USER = gql`
         rtc
         rtm
         uid
+        symt
+        symblTExpire
       }
       screenShare {
         rtc
@@ -59,6 +61,8 @@ const JOIN_CHANNEL_PHRASE = gql`
         rtc
         rtm
         uid
+        symt
+        symblTExpire
       }
       screenShare {
         rtc
@@ -137,12 +141,6 @@ const VideoCall: React.FC = () => {
   };
   let data, loading, error;
 
-  ///
-
-
-
-  ///
-
   ({data, loading, error} = useQuery(
     store.token === null
       ? JOIN_CHANNEL_PHRASE
@@ -153,15 +151,14 @@ const VideoCall: React.FC = () => {
 
   if (error) {
     console.log('error', error);
-    // console.log('error data', data);
     if (!errorMessage) {
       setErrorMessage(error);
     }
   }
-
   if (!loading && data) {
     console.log('token:', rtcProps.token);
     console.log('error', data.error);
+    window.localStorage.setItem("symblTokenBE", data.joinChannel.mainUser.symt);
     rtcProps = {
       appId: $config.AppID,
       channel: data.joinChannel.channel,

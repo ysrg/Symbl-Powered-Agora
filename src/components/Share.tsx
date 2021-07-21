@@ -23,11 +23,11 @@ const Share = (props: any) => {
     hostControlCheckbox,
   } = props;
   const {primaryColor} = useContext(ColorContext);
-  const symblToken= window.localStorage.getItem("symblToken");
+  const symblToken= window.localStorage.getItem("symblTokenBE");
 
   const enterMeeting = () => {
     if (urlHost) {
-      history.push(`/${joinPhrase}/${symblToken}`);
+      history.push(`/${joinPhrase}`);
     }
   };
 
@@ -37,23 +37,23 @@ const Share = (props: any) => {
     $config.frontEndURL
       ? hostControlCheckbox
         ? (stringToCopy += `Meeting - ${roomTitle}
-URL for Attendee: ${$config.frontEndURL}/${urlView}/${symblToken}
-URL for Host: ${$config.frontEndURL}/${urlHost}/${symblToken}`)
+URL for Attendee: ${$config.frontEndURL}/${urlView}
+URL for Host: ${$config.frontEndURL}/${urlHost}`)
         : (stringToCopy += `Meeting - ${roomTitle}
-Meeting URL: ${$config.frontEndURL}/${urlHost}/${symblToken}`)
+Meeting URL: ${$config.frontEndURL}/${urlHost}`)
       : platform === 'web'
       ? hostControlCheckbox
         ? (stringToCopy += `Meeting - ${roomTitle}
-URL for Attendee: ${window.location.origin}/${urlView}/${symblToken}
-URL for Host: ${window.location.origin}/${urlHost}/${symblToken}`)
+URL for Attendee: ${window.location.origin}/${urlView}
+URL for Host: ${window.location.origin}/${urlHost}`)
         : (stringToCopy += `Meeting - ${roomTitle}
-Meeting URL: ${window.location.origin}/${urlHost}/${symblToken}`)
+Meeting URL: ${window.location.origin}/${urlHost}`)
       : hostControlCheckbox
       ? (stringToCopy += `Meeting - ${roomTitle}
-Attendee Meeting ID: ${urlView}/${symblToken}
-Host Meeting ID: ${urlHost}/${symblToken}`)
+Attendee Meeting ID: ${urlView}
+Host Meeting ID: ${urlHost}`)
       : (stringToCopy += `Meeting - ${roomTitle}
-Meeting URL: ${urlHost}/${symblToken}`);
+Meeting URL: ${urlHost}`);
 
     pstn
       ? (stringToCopy += `PSTN Number: ${pstn.number}
@@ -85,9 +85,9 @@ PSTN Pin: ${pstn.dtmf}`)
             <View style={style.urlHolder}>
               <Text style={style.url} >
                 {$config.frontEndURL
-                  ? `${$config.frontEndURL}/${urlView}/${symblToken}`
+                  ? `${$config.frontEndURL}/${urlView}`
                   : platform === 'web'
-                  ? `${window.location.origin}/${urlView}/${symblToken}`
+                  ? `${window.location.origin}/${urlView}`
                   : urlView}
               </Text>
             </View>
@@ -105,9 +105,9 @@ PSTN Pin: ${pstn.dtmf}`)
         <View style={style.urlHolder}>
           <Text style={style.url}>
             {$config.frontEndURL
-              ? `${$config.frontEndURL}/${urlHost}/${symblToken}`
+              ? `${$config.frontEndURL}/${urlHost}`
               : platform === 'web'
-              ? `${window.location.origin}/${urlHost}/${symblToken}`
+              ? `${window.location.origin}/${urlHost}`
               : urlHost}
           </Text>
         </View>
@@ -160,6 +160,7 @@ const style = StyleSheet.create({
     flex: 2,
     justifyContent: 'space-evenly',
     marginHorizontal: '10%',
+    maxHeight: '80%'
   },
   nav: {
     flex: 1,
@@ -175,6 +176,7 @@ const style = StyleSheet.create({
     marginBottom: '5%',
     marginRight: '5%',
     marginHorizontal: 'auto',
+    maxHeight: '70%'
   },
   heading: {
     fontSize: 38,
@@ -199,7 +201,7 @@ const style = StyleSheet.create({
     width: '60%',
     backgroundColor: '#099DFD',
     maxWidth: 400,
-    minWidth: 200,
+    minWidth: 360,
     minHeight: 45,
   },
   primaryBtnText: {
@@ -217,7 +219,7 @@ const style = StyleSheet.create({
     borderWidth: 3,
     maxWidth: 400,
     minHeight: 42,
-    minWidth: 200,
+    minWidth: 360,
   },
   secondaryBtnText: {
     width: '100%',

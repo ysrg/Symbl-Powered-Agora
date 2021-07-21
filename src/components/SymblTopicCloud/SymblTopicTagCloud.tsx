@@ -244,7 +244,7 @@ const SymblTopicTagCloud = () => {
                             method: 'GET',
                             headers: {
                                 Accept: "application/json",
-                                "Authorization": `Bearer ${window.localStorage.getItem('symblToken')}`
+                                "Authorization": `Bearer ${window.localStorage.getItem('symblTokenBE')}`
                             }
 
                         }

@@ -48,21 +48,21 @@ const ParticipantView = (props: any) => {
   const {data, loading, error} = useQuery(SHARE, {
     variables: {passphrase: phrase},
   });
-  const symblToken= window.localStorage.getItem("symblToken");
+  const symblToken= window.localStorage.getItem("symblTokenBE");
   const copyToClipboard = () => {
     if (data && !loading) {
       let stringToCopy = '';
       $config.frontEndURL
         ? (stringToCopy += `Meeting - ${data.share.title}
-URL for Attendee: ${$config.frontEndURL}/${data.share.passphrase.view}/${symblToken}
-URL for Host: ${$config.frontEndURL}/${data.share.passphrase.host}/${symblToken}`)
+URL for Attendee: ${$config.frontEndURL}/${data.share.passphrase.view}
+URL for Host: ${$config.frontEndURL}/${data.share.passphrase.host}`)
         : platform === 'web'
         ? (stringToCopy += `Meeting - ${data.share.title}
-URL for Attendee: ${window.location.origin}/${data.share.passphrase.view}/${symblToken}
-URL for Host: ${window.location.origin}/${data.share.passphrase.host}/${symblToken}`)
+URL for Attendee: ${window.location.origin}/${data.share.passphrase.view}
+URL for Host: ${window.location.origin}/${data.share.passphrase.host}`)
         : (stringToCopy += `Meeting - ${data.share.title}
-Attendee Meeting ID: ${data.share.passphrase.view}/${symblToken}
-Host Meeting ID: ${data.share.passphrase.host}/${symblToken}`);
+Attendee Meeting ID: ${data.share.passphrase.view}
+Host Meeting ID: ${data.share.passphrase.host}`);
 
       data.share.pstn
         ? (stringToCopy += `PSTN Number: ${data.share.pstn.number}
