@@ -45,10 +45,13 @@ export function getInterInsight() {
   return interInsight;
 }
 export async function SendStream(channelName, optionalUid, optionalInfo) {
-  if (symbl || sS) {
+  if (symbl && sS) {
     return { sS, symbl };
   }
 
+  if (symbl && optionalInfo && optionalInfo.transcript) {
+    return { symbl, sS };
+  }
   /////
 
   //const [closedCaptionResponse,setClosedCaptionResponse]=useState({});
@@ -79,7 +82,6 @@ export async function SendStream(channelName, optionalUid, optionalInfo) {
   };
 
   const data = window.localStorage.getItem('symblTokenBE');
-  console.log('=====jiu', data);
   ///importing username from vvideoCall.ts
   const userName = new UserrIdToUSernameMappring().getUserMap(optionalUid);
   const un = document.getElementById('username').innerText;
@@ -92,7 +94,6 @@ export async function SendStream(channelName, optionalUid, optionalInfo) {
     meeting: channelName,
   };
   Symbl.ACCESS_TOKEN = window.localStorage.getItem('symblTokenBE'); //data.accessToken;
-
   symbl = new Symbl(config);
   var _caption = '';
   const captioningHandler = {
@@ -135,7 +136,9 @@ export async function SendStream(channelName, optionalUid, optionalInfo) {
   };
   symbl.subscribeToCaptioningEvents(captioningHandler);
 
-  sS = await symbl.start();
+  sS = await symbl.start(); //fails
+  window.sS = sS;
+  window.symbl = symbl;
 
   if (!m.has(channelName)) {
   }
